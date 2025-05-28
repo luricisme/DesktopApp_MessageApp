@@ -1,9 +1,28 @@
 package views.components;
 
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 public class ItemPeople extends javax.swing.JPanel {
     public ItemPeople(String name) {
         initComponents();
         userName.setText(name);
+        init();
+    }
+    
+    private void init(){
+        addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent me){
+                setBackground(new Color(228, 226, 207));
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent me){
+                setBackground(new Color(236, 234, 228));
+            }
+        });
     }
 
     /**
@@ -18,11 +37,12 @@ public class ItemPeople extends javax.swing.JPanel {
         userAvatar = new views.swing.ImageAvatar();
         userName = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(220, 225, 233));
+        setBackground(new java.awt.Color(236, 234, 228));
 
         userAvatar.setBorderSize(1);
         userAvatar.setImage(new javax.swing.ImageIcon(getClass().getResource("/icons/profile01.png"))); // NOI18N
 
+        userName.setBackground(new java.awt.Color(249, 249, 249));
         userName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         userName.setText("Name");
 

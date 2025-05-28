@@ -2,24 +2,49 @@ package views.forms;
 
 import net.miginfocom.swing.MigLayout;
 import views.components.ItemPeople;
-
+import views.swing.ScrollBar;
 
 public class Menu_Left extends javax.swing.JPanel {
+
     public Menu_Left() {
         initComponents();
         init();
     }
-    
-    private void init(){
+
+    private void init() {
+        sp.setVerticalScrollBar(new ScrollBar());
         menuList.setLayout(new MigLayout("fillx", "0[]0", "1[]1"));
-        showPeople();
+        showMessage();
     }
-    
-    private void showPeople(){
+
+    private void showMessage() {
         // Test data
-        for(int i = 0; i < 3; i++){
+        menuList.removeAll();
+        for (int i = 0; i < 10; i++) {
             menuList.add(new ItemPeople("People " + i), "wrap");
         }
+        refreshMenuList();
+    }
+    
+    private void showGroups(){
+        menuList.removeAll();
+        for (int i = 0; i < 10; i++) {
+            menuList.add(new ItemPeople("Group " + i), "wrap");
+        }
+        refreshMenuList();
+    }
+    
+    private void showBox(){
+        menuList.removeAll();
+        for (int i = 0; i < 10; i++) {
+            menuList.add(new ItemPeople("Box " + i), "wrap");
+        }
+        refreshMenuList();
+    }
+    
+    private void refreshMenuList(){
+        menuList.repaint();
+        menuList.revalidate();
     }
 
     /**
@@ -31,69 +56,54 @@ public class Menu_Left extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        menuButton2 = new views.components.MenuButton();
         menu = new javax.swing.JLayeredPane();
-        menuButton3 = new views.components.MenuButton();
-        menuButton4 = new views.components.MenuButton();
-        menuButton5 = new views.components.MenuButton();
+        messageBtn = new views.components.MenuButton();
+        groupBtn = new views.components.MenuButton();
+        boxBtn = new views.components.MenuButton();
+        sp = new javax.swing.JScrollPane();
         menuList = new javax.swing.JLayeredPane();
-
-        menuButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/message_selected.png"))); // NOI18N
-        menuButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuButton2ActionPerformed(evt);
-            }
-        });
 
         setBackground(new java.awt.Color(249, 249, 249));
 
-        menu.setBackground(new java.awt.Color(207, 213, 215));
+        menu.setBackground(new java.awt.Color(143, 171, 152));
         menu.setOpaque(true);
+        menu.setLayout(new java.awt.GridLayout(1, 3));
 
-        menuButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/message_selected.png"))); // NOI18N
-        menuButton3.addActionListener(new java.awt.event.ActionListener() {
+        messageBtn.setIconSelected(new javax.swing.ImageIcon(getClass().getResource("/icons/message_selected.png"))); // NOI18N
+        messageBtn.setIconSimple(new javax.swing.ImageIcon(getClass().getResource("/icons/message.png"))); // NOI18N
+        messageBtn.setSelected(true);
+        messageBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuButton3ActionPerformed(evt);
+                messageBtnActionPerformed(evt);
             }
         });
+        menu.add(messageBtn);
 
-        menuButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/box.png"))); // NOI18N
-        menuButton4.addActionListener(new java.awt.event.ActionListener() {
+        groupBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/group.png"))); // NOI18N
+        groupBtn.setIconSelected(new javax.swing.ImageIcon(getClass().getResource("/icons/group_selected.png"))); // NOI18N
+        groupBtn.setIconSimple(new javax.swing.ImageIcon(getClass().getResource("/icons/group.png"))); // NOI18N
+        groupBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuButton4ActionPerformed(evt);
+                groupBtnActionPerformed(evt);
             }
         });
+        menu.add(groupBtn);
 
-        menuButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/group.png"))); // NOI18N
-        menuButton5.addActionListener(new java.awt.event.ActionListener() {
+        boxBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/box.png"))); // NOI18N
+        boxBtn.setIconSelected(new javax.swing.ImageIcon(getClass().getResource("/icons/box_selected.png"))); // NOI18N
+        boxBtn.setIconSimple(new javax.swing.ImageIcon(getClass().getResource("/icons/box.png"))); // NOI18N
+        boxBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuButton5ActionPerformed(evt);
+                boxBtnActionPerformed(evt);
             }
         });
+        menu.add(boxBtn);
 
-        menu.setLayer(menuButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        menu.setLayer(menuButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        menu.setLayer(menuButton5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        sp.setBackground(new java.awt.Color(236, 234, 228));
+        sp.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
-        menu.setLayout(menuLayout);
-        menuLayout.setHorizontalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLayout.createSequentialGroup()
-                .addGap(2, 2, 2)
-                .addComponent(menuButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(menuButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(menuButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        menuLayout.setVerticalGroup(
-            menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menuButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(menuButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(menuButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        menuList.setBackground(new java.awt.Color(236, 234, 228));
+        menuList.setOpaque(true);
 
         javax.swing.GroupLayout menuListLayout = new javax.swing.GroupLayout(menuList);
         menuList.setLayout(menuListLayout);
@@ -103,48 +113,61 @@ public class Menu_Left extends javax.swing.JPanel {
         );
         menuListLayout.setVerticalGroup(
             menuListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 529, Short.MAX_VALUE)
+            .addGap(0, 541, Short.MAX_VALUE)
         );
+
+        sp.setViewportView(menuList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(menu)
-            .addComponent(menuList)
+            .addComponent(sp)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(menuList))
+                .addGap(0, 0, 0)
+                .addComponent(sp))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void menuButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menuButton2ActionPerformed
+    private void messageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messageBtnActionPerformed
+        if (!messageBtn.isSelected()) {
+            messageBtn.setSelected(true);
+            groupBtn.setSelected(false);
+            boxBtn.setSelected(false);
+            showMessage();
+        }
+    }//GEN-LAST:event_messageBtnActionPerformed
 
-    private void menuButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menuButton3ActionPerformed
+    private void boxBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxBtnActionPerformed
+        if (!boxBtn.isSelected()) {
+            messageBtn.setSelected(false);
+            groupBtn.setSelected(false);
+            boxBtn.setSelected(true);
+            showBox();
+        }
+    }//GEN-LAST:event_boxBtnActionPerformed
 
-    private void menuButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menuButton4ActionPerformed
-
-    private void menuButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menuButton5ActionPerformed
+    private void groupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_groupBtnActionPerformed
+        if (!groupBtn.isSelected()) {
+            messageBtn.setSelected(false);
+            groupBtn.setSelected(true);
+            boxBtn.setSelected(false);
+            showGroups();
+        }
+    }//GEN-LAST:event_groupBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private views.components.MenuButton boxBtn;
+    private views.components.MenuButton groupBtn;
     private javax.swing.JLayeredPane menu;
-    private views.components.MenuButton menuButton2;
-    private views.components.MenuButton menuButton3;
-    private views.components.MenuButton menuButton4;
-    private views.components.MenuButton menuButton5;
     private javax.swing.JLayeredPane menuList;
+    private views.components.MenuButton messageBtn;
+    private javax.swing.JScrollPane sp;
     // End of variables declaration//GEN-END:variables
 }

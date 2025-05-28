@@ -61,6 +61,7 @@ public class Main extends javax.swing.JFrame {
 
         background.setBackground(new java.awt.Color(255, 255, 255));
 
+        title.setBackground(new java.awt.Color(191, 208, 193));
         title.setPreferredSize(new java.awt.Dimension(839, 28));
         title.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {

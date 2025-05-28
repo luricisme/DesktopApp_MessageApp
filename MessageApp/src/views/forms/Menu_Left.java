@@ -67,6 +67,7 @@ public class Menu_Left extends javax.swing.JPanel {
 
         menu.setBackground(new java.awt.Color(143, 171, 152));
         menu.setOpaque(true);
+        menu.setPreferredSize(new java.awt.Dimension(138, 40));
         menu.setLayout(new java.awt.GridLayout(1, 3));
 
         messageBtn.setIconSelected(new javax.swing.ImageIcon(getClass().getResource("/icons/message_selected.png"))); // NOI18N
@@ -113,7 +114,7 @@ public class Menu_Left extends javax.swing.JPanel {
         );
         menuListLayout.setVerticalGroup(
             menuListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 541, Short.MAX_VALUE)
+            .addGap(0, 548, Short.MAX_VALUE)
         );
 
         sp.setViewportView(menuList);
@@ -122,7 +123,7 @@ public class Menu_Left extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menu)
+            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(sp)
         );
         layout.setVerticalGroup(

@@ -1,6 +1,8 @@
 package views.components;
 
 import java.awt.Color;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JScrollBar;
 import net.miginfocom.swing.MigLayout;
 import views.swing.ScrollBar;
@@ -10,11 +12,12 @@ public class ChatBody extends javax.swing.JPanel {
     public ChatBody() {
         initComponents();
         init();
-        addItemLeft("Hello anh ban chao anh ban nha aaaaaaaaaaaaa", "Luric");
-        addItemRight("378474747474747474");
+        addItemLeft("Hello anh ban chao anh ban nha aaaaaaaaa8888888888888888888888888aaaa", "Luric", new ImageIcon(getClass().getResource("/test/msg01.jpg")));
+        addItemRight("378474747474747474", new ImageIcon(getClass().getResource("/test/msg01.jpg")));
         addDate("29/05/2025");
-        addItemLeft("Hello anh ban chao anh ban nha aaaaaaaaaaaaa", "Luric");
-        addItemRight("378474747474747474");
+        addItemLeft("Hello anh ban chao anh ban nha aaaaaaaaaaaaa", "Luric", new ImageIcon(getClass().getResource("/test/ava01.jpg")));
+        addItemRight("378474747474747474", new ImageIcon(getClass().getResource("/test/ava01.jpg")));
+        addItemLeft("", "Luric", new ImageIcon(getClass().getResource("/test/ava01.jpg")));
     }
 
     private void init() {
@@ -23,9 +26,11 @@ public class ChatBody extends javax.swing.JPanel {
         sp.getVerticalScrollBar().setBackground(Color.WHITE);
     }
 
-    public void addItemLeft(String text, String user) {
+    public void addItemLeft(String text, String user, Icon ...images) {
         ChatLeftWithProfile item = new ChatLeftWithProfile();
         item.setText(text);
+        item.setImage(images);
+        item.setTime();
         item.setUserProfile(user);
         body.add(item, "wrap, w 100::80%");
         //  ::80% set max with 80%
@@ -33,9 +38,10 @@ public class ChatBody extends javax.swing.JPanel {
         body.revalidate();
     }
     
-    public void addItemRight(String text) {
+    public void addItemRight(String text, Icon ...images) {
         ChatRight item = new ChatRight();
         item.setText(text);
+        item.setImage(images);
         body.add(item, "wrap, al right, w 100::80%");
         //  ::80% set max with 80%
         body.repaint();

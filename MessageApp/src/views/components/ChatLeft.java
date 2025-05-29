@@ -1,6 +1,7 @@
 package views.components;
 
 import java.awt.Color;
+import javax.swing.Icon;
 
 public class ChatLeft extends javax.swing.JLayeredPane {
 
@@ -9,12 +10,24 @@ public class ChatLeft extends javax.swing.JLayeredPane {
         txt.setBackground(new Color(236,234,228));
     }
     
-    public void setText(String text){
-        txt.setText(text);
-        txt.setTime("10:30 PM"); // Testing
+        public void setText(String text){
+//        txt.setText(text);
+//        txt.setTime("10:30 PM"); // Testing
 //        txt.sendSuccess();
+          if (text.equals("")){
+              txt.hideText();
+          }else{
+              txt.setText(text);
+          }
     }
     
+    public void setImage(Icon ...images){
+        txt.setImage(false, images);
+    }
+    
+    public void setTime(){
+        txt.setTime("10:30 PM");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

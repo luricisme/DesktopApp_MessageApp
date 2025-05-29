@@ -1,6 +1,7 @@
 package views.components;
 
 import java.awt.Color;
+import javax.swing.Icon;
 
 public class ChatRight extends javax.swing.JLayeredPane {
 
@@ -9,10 +10,24 @@ public class ChatRight extends javax.swing.JLayeredPane {
         txt.setBackground(new Color(124,149,121));
     }
     
-    public void setText(String text){
-        txt.setText(text);
-        txt.setTime("10:35PM");
-        txt.seen();
+        public void setText(String text){
+//        txt.setText(text);
+//        txt.setTime("10:30 PM"); // Testing
+//        txt.sendSuccess();
+          if (text.equals("")){
+              txt.hideText();
+          }else{
+              txt.setText(text);
+          }
+          txt.seen();
+    }
+    
+    public void setImage(Icon ...images){
+        txt.setImage(true, images);
+    }
+    
+    public void setTime(){
+        txt.setTime("10:30 PM");
     }
     
     /**

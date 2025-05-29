@@ -19,9 +19,22 @@ public class ChatLeftWithProfile extends javax.swing.JLayeredPane {
     }
     
     public void setText(String text){
-        txt.setText(text);
-        txt.setTime("10:30 PM"); // Testing
+//        txt.setText(text);
+//        txt.setTime("10:30 PM"); // Testing
 //        txt.sendSuccess();
+          if (text.equals("")){
+              txt.hideText();
+          }else{
+              txt.setText(text);
+          }
+    }
+    
+    public void setImage(Icon ...images){
+        txt.setImage(false, images);
+    }
+    
+    public void setTime(){
+        txt.setTime("10:30 PM");
     }
     
     @SuppressWarnings("unchecked")

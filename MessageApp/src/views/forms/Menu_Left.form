@@ -43,7 +43,7 @@
         </Property>
         <Property name="opaque" type="boolean" value="true"/>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[138, 40]"/>
+          <Dimension value="[138, 45]"/>
         </Property>
       </Properties>
 

@@ -1,6 +1,9 @@
 package views.components;
 
+import java.awt.Adjustable;
 import java.awt.Color;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollBar;
@@ -14,14 +17,14 @@ public class ChatBody extends javax.swing.JPanel {
         init();
         addItemLeft("Hello anh ban chao anh ban nha aaaaaaaaa8888888888888888888888888aaaa", "Luric", new ImageIcon(getClass().getResource("/test/msg01.jpg")));
         addItemRight("378474747474747474", new ImageIcon(getClass().getResource("/test/msg01.jpg")));
-        addDate("29/05/2025");
-        String img[] = {"LJMaR{Sik@ozK-t7RlRjO]oeMxxa", "LKJQ=+t301D%~XxaD*t700WD?H%1"};
-        addItemLeft("Hello anh ban chao anh ban nha aaaaaaaaaaaaa", "Luric", img);
-        addItemLeft("Hello anh ban chao anh ban nha aaaaaaaaaaaaa", "Luric", new ImageIcon(getClass().getResource("/test/ava01.jpg")));
-        addItemRight("378474747474747474", new ImageIcon(getClass().getResource("/test/ava01.jpg")));
-        addItemLeft("", "Luric", new ImageIcon(getClass().getResource("/test/ava01.jpg")));
-        addItemFile("", "Darius", "my_doc.pdf", "1 MB");
-        addItemFileRight("", "MyFile.rar", "68.44 MB");
+//        addDate("29/05/2025");
+//        String img[] = {"LJMaR{Sik@ozK-t7RlRjO]oeMxxa", "LKJQ=+t301D%~XxaD*t700WD?H%1"};
+//        addItemLeft("Hello anh ban chao anh ban nha aaaaaaaaaaaaa", "Luric", img);
+//        addItemLeft("Hello anh ban chao anh ban nha aaaaaaaaaaaaa", "Luric", new ImageIcon(getClass().getResource("/test/ava01.jpg")));
+//        addItemRight("378474747474747474", new ImageIcon(getClass().getResource("/test/ava01.jpg")));
+//        addItemLeft("", "Luric", new ImageIcon(getClass().getResource("/test/ava01.jpg")));
+//        addItemFile("", "Darius", "my_doc.pdf", "1 MB");
+//        addItemFileRight("", "MyFile.rar", "68.44 MB");
     }
 
     private void init() {
@@ -74,6 +77,8 @@ public class ChatBody extends javax.swing.JPanel {
         //  ::80% set max with 80%
         body.repaint();
         body.revalidate();
+        item.setTime();
+        scrollToBottom();
     }
     
     public void addItemFileRight(String text, String fileName, String fileSize) {
@@ -130,7 +135,18 @@ public class ChatBody extends javax.swing.JPanel {
             .addComponent(sp)
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    private void scrollToBottom() {
+        JScrollBar verticalBar = sp.getVerticalScrollBar();
+        AdjustmentListener downScroller = new AdjustmentListener() {
+            @Override
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                Adjustable adjustable = e.getAdjustable();
+                adjustable.setValue(adjustable.getMaximum());
+                verticalBar.removeAdjustmentListener(this);
+            }
+        };
+        verticalBar.addAdjustmentListener(downScroller);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel body;

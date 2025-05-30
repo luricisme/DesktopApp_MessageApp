@@ -14,15 +14,17 @@ import javax.swing.JLayeredPane;
 import javax.swing.border.EmptyBorder;
 
 public class ChatItem extends javax.swing.JLayeredPane {
+
     private JLabel label;
+
     public ChatItem() {
         initComponents();
         txt.setEditable(false);
         txt.setBackground(new Color(0, 0, 0, 0));
         txt.setOpaque(false);
     }
-    
-    public void setUserProfile(String user){
+
+    public void setUserProfile(String user) {
         JLayeredPane layer = new JLayeredPane();
         layer.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         layer.setBorder(new EmptyBorder(10, 10, 0, 10));
@@ -37,12 +39,12 @@ public class ChatItem extends javax.swing.JLayeredPane {
         layer.add(cmd);
         add(layer, 0);
     }
-    
-    public void setText(String text){
+
+    public void setText(String text) {
         txt.setText(text);
     }
-    
-    public void setTime(String time){
+
+    public void setTime(String time) {
         JLayeredPane layer = new JLayeredPane();
         layer.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0));
         layer.setBorder(new EmptyBorder(0, 5, 10, 5));
@@ -52,28 +54,30 @@ public class ChatItem extends javax.swing.JLayeredPane {
         layer.add(label);
         add(layer);
     }
-    
-    public void setImage(boolean right, Icon ...images){
+
+    public void setImage(boolean right, Icon... images) {
+        if (images.length > 0) {
+            JLayeredPane layer = new JLayeredPane();
+            layer.setLayout(new FlowLayout(right ? FlowLayout.RIGHT : FlowLayout.LEFT));
+            layer.setBorder(new EmptyBorder(0, 5, 0, 5));
+            ChatImage chatImage = new ChatImage(right);
+            chatImage.addImage(images);
+            layer.add(chatImage);
+            add(layer);
+        }
+    }
+
+    public void setImage(boolean right, String... images) {
         JLayeredPane layer = new JLayeredPane();
-        layer.setLayout(new FlowLayout(right?FlowLayout.RIGHT:FlowLayout.LEFT));
+        layer.setLayout(new FlowLayout(right ? FlowLayout.RIGHT : FlowLayout.LEFT));
         layer.setBorder(new EmptyBorder(0, 5, 0, 5));
         ChatImage chatImage = new ChatImage(right);
         chatImage.addImage(images);
         layer.add(chatImage);
         add(layer);
     }
-    
-    public void setImage(boolean right, String ...images){
-        JLayeredPane layer = new JLayeredPane();
-        layer.setLayout(new FlowLayout(right?FlowLayout.RIGHT:FlowLayout.LEFT));
-        layer.setBorder(new EmptyBorder(0, 5, 0, 5));
-        ChatImage chatImage = new ChatImage(right);
-        chatImage.addImage(images);
-        layer.add(chatImage);
-        add(layer);
-    }
-    
-    public void setFile(String fileName, String fileSize){
+
+    public void setFile(String fileName, String fileSize) {
         JLayeredPane layer = new JLayeredPane();
         layer.setLayout(new FlowLayout(FlowLayout.LEFT));
         layer.setBorder(new EmptyBorder(0, 5, 0, 5));
@@ -82,20 +86,20 @@ public class ChatItem extends javax.swing.JLayeredPane {
         layer.add(chatFile);
         add(layer);
     }
-    
-    public void sendSuccess(){
-        if(label != null){
+
+    public void sendSuccess() {
+        if (label != null) {
             label.setIcon(new ImageIcon(getClass().getResource("/icons/tick.png")));
         }
     }
-    
-    public void seen(){
-        if(label != null){
+
+    public void seen() {
+        if (label != null) {
             label.setIcon(new ImageIcon(getClass().getResource("/icons/double_tick.png")));
         }
     }
-    
-    public void hideText(){
+
+    public void hideText() {
         txt.setVisible(false);
     }
 
@@ -120,7 +124,7 @@ public class ChatItem extends javax.swing.JLayeredPane {
     }// </editor-fold>//GEN-END:initComponents
 
     @Override
-    protected void paintComponent(Graphics g){
+    protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(getBackground());

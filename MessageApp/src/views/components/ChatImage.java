@@ -1,7 +1,13 @@
 package views.components;
 
+import events.PublicEvent;
+import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.Icon;
+import javax.swing.SwingUtilities;
 import net.miginfocom.swing.MigLayout;
 import views.swing.PictureBox;
 
@@ -17,8 +23,21 @@ public class ChatImage extends javax.swing.JPanel {
             PictureBox pic = new PictureBox();
             pic.setPreferredSize(getAutoSize(image, 200, 200));
             pic.setImage(image);
+            addEvent(pic,image);
             add(pic, "wrap");
         }
+    }
+    
+    private void addEvent(Component com, Icon image){
+        com.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        com.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent me){
+                if(SwingUtilities.isLeftMouseButton(me)){
+                    PublicEvent.getInstance().getEventImageView().viewImage(image);
+                }
+            }
+        });
     }
     
     private Dimension getAutoSize(Icon image, int w, int h) {

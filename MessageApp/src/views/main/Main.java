@@ -56,6 +56,7 @@ public class Main extends javax.swing.JFrame {
         cmdMinimize = new javax.swing.JButton();
         cmdClose = new javax.swing.JButton();
         body = new javax.swing.JLayeredPane();
+        login = new views.forms.Login();
         viewImage = new views.forms.ViewImage();
         home = new views.forms.Home();
 
@@ -117,6 +118,7 @@ public class Main extends javax.swing.JFrame {
         );
 
         body.setLayout(new java.awt.CardLayout());
+        body.add(login, "card4");
         body.setLayer(viewImage, javax.swing.JLayeredPane.POPUP_LAYER);
         body.add(viewImage, "card3");
         body.add(home, "card2");
@@ -136,7 +138,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(backgroundLayout.createSequentialGroup()
                 .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -231,6 +233,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton cmdClose;
     private javax.swing.JButton cmdMinimize;
     private views.forms.Home home;
+    private views.forms.Login login;
     private javax.swing.JPanel title;
     private views.forms.ViewImage viewImage;
     // End of variables declaration//GEN-END:variables

@@ -15,6 +15,8 @@ public class ChatBody extends javax.swing.JPanel {
         addItemLeft("Hello anh ban chao anh ban nha aaaaaaaaa8888888888888888888888888aaaa", "Luric", new ImageIcon(getClass().getResource("/test/msg01.jpg")));
         addItemRight("378474747474747474", new ImageIcon(getClass().getResource("/test/msg01.jpg")));
         addDate("29/05/2025");
+        String img[] = {"LJMaR{Sik@ozK-t7RlRjO]oeMxxa", "LKJQ=+t301D%~XxaD*t700WD?H%1"};
+        addItemLeft("Hello anh ban chao anh ban nha aaaaaaaaaaaaa", "Luric", img);
         addItemLeft("Hello anh ban chao anh ban nha aaaaaaaaaaaaa", "Luric", new ImageIcon(getClass().getResource("/test/ava01.jpg")));
         addItemRight("378474747474747474", new ImageIcon(getClass().getResource("/test/ava01.jpg")));
         addItemLeft("", "Luric", new ImageIcon(getClass().getResource("/test/ava01.jpg")));
@@ -27,6 +29,18 @@ public class ChatBody extends javax.swing.JPanel {
     }
 
     public void addItemLeft(String text, String user, Icon ...images) {
+        ChatLeftWithProfile item = new ChatLeftWithProfile();
+        item.setText(text);
+        item.setImage(images);
+        item.setTime();
+        item.setUserProfile(user);
+        body.add(item, "wrap, w 100::80%");
+        //  ::80% set max with 80%
+        body.repaint();
+        body.revalidate();
+    }
+    
+    public void addItemLeft(String text, String user, String []images) {
         ChatLeftWithProfile item = new ChatLeftWithProfile();
         item.setText(text);
         item.setImage(images);

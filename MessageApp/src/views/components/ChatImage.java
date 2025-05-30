@@ -15,31 +15,41 @@ public class ChatImage extends javax.swing.JPanel {
 
     public ChatImage(boolean right) {
         initComponents();
-        setLayout(new MigLayout("", "0["+ (right?"right":"left") +"]0", "2[]2"));
+        setLayout(new MigLayout("", "0[" + (right ? "right" : "left") + "]0", "2[]2"));
     }
-    
-    public void addImage(Icon ...images){
-        for(Icon image: images){
+
+    public void addImage(Icon... images) {
+        for (Icon image : images) {
             PictureBox pic = new PictureBox();
             pic.setPreferredSize(getAutoSize(image, 200, 200));
             pic.setImage(image);
-            addEvent(pic,image);
+            addEvent(pic, image);
             add(pic, "wrap");
         }
     }
-    
-    private void addEvent(Component com, Icon image){
+
+    public void addImage(String... images) {
+        for (String image : images) {
+            ImageItem pic = new ImageItem();
+            pic.setPreferredSize(new Dimension(200, 200));
+            pic.setImage(image);
+//            addEvent(pic, image);
+            add(pic, "wrap");
+        }
+    }
+
+    private void addEvent(Component com, Icon image) {
         com.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        com.addMouseListener(new MouseAdapter(){
+        com.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent me){
-                if(SwingUtilities.isLeftMouseButton(me)){
+            public void mouseClicked(MouseEvent me) {
+                if (SwingUtilities.isLeftMouseButton(me)) {
                     PublicEvent.getInstance().getEventImageView().viewImage(image);
                 }
             }
         });
     }
-    
+
     private Dimension getAutoSize(Icon image, int w, int h) {
         int iw = image.getIconWidth();
         int ih = image.getIconHeight();

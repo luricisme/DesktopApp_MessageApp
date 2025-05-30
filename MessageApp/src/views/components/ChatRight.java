@@ -7,33 +7,37 @@ public class ChatRight extends javax.swing.JLayeredPane {
 
     public ChatRight() {
         initComponents();
-        txt.setBackground(new Color(124,149,121));
+        txt.setBackground(new Color(124, 149, 121));
     }
-    
-        public void setText(String text){
+
+    public void setText(String text) {
 //        txt.setText(text);
 //        txt.setTime("10:30 PM"); // Testing
 //        txt.sendSuccess();
-          if (text.equals("")){
-              txt.hideText();
-          }else{
-              txt.setText(text);
-          }
-          txt.seen();
+        if (text.equals("")) {
+            txt.hideText();
+        } else {
+            txt.setText(text);
+        }
+        txt.seen();
     }
-    
-    public void setImage(Icon ...images){
+
+    public void setImage(Icon... images) {
         txt.setImage(true, images);
     }
-    
-    public void setImage(String ...images){
-        txt.setImage(false, images);
+
+    public void setImage(String... images) {
+        txt.setImage(true, images);
     }
-    
-    public void setTime(){
+
+    public void setFile(String fileName, String fileSize) {
+        txt.setFile(fileName, fileSize);
+    }
+
+    public void setTime() {
         txt.setTime("10:30 PM");
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

@@ -20,6 +20,8 @@ public class ChatBody extends javax.swing.JPanel {
         addItemLeft("Hello anh ban chao anh ban nha aaaaaaaaaaaaa", "Luric", new ImageIcon(getClass().getResource("/test/ava01.jpg")));
         addItemRight("378474747474747474", new ImageIcon(getClass().getResource("/test/ava01.jpg")));
         addItemLeft("", "Luric", new ImageIcon(getClass().getResource("/test/ava01.jpg")));
+        addItemFile("", "Darius", "my_doc.pdf", "1 MB");
+        addItemFileRight("", "MyFile.rar", "68.44 MB");
     }
 
     private void init() {
@@ -52,10 +54,32 @@ public class ChatBody extends javax.swing.JPanel {
         body.revalidate();
     }
     
+    public void addItemFile(String text, String user, String fileName, String fileSize) {
+        ChatLeftWithProfile item = new ChatLeftWithProfile();
+        item.setText(text);
+        item.setFile(fileName, fileSize);
+        item.setTime();
+        item.setUserProfile(user);
+        body.add(item, "wrap, w 100::80%");
+        //  ::80% set max with 80%
+        body.repaint();
+        body.revalidate();
+    }
+    
     public void addItemRight(String text, Icon ...images) {
         ChatRight item = new ChatRight();
         item.setText(text);
         item.setImage(images);
+        body.add(item, "wrap, al right, w 100::80%");
+        //  ::80% set max with 80%
+        body.repaint();
+        body.revalidate();
+    }
+    
+    public void addItemFileRight(String text, String fileName, String fileSize) {
+        ChatRight item = new ChatRight();
+        item.setText(text);
+        item.setFile(fileName, fileSize);
         body.add(item, "wrap, al right, w 100::80%");
         //  ::80% set max with 80%
         body.repaint();

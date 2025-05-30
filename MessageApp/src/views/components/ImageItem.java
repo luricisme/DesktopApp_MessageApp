@@ -30,14 +30,16 @@ public class ImageItem extends javax.swing.JLayeredPane {
 
         pic.setLayout(new java.awt.GridBagLayout());
 
-        progress1.setValue(50);
+        progress1.setToolTipText("");
+        progress1.setValue(52);
+        progress1.setProgressType(views.swing.Progress.ProgressType.FILE);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 40;
-        gridBagConstraints.ipady = -96;
+        gridBagConstraints.ipadx = 34;
+        gridBagConstraints.ipady = -104;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(20, 20, 20, 20);
+        gridBagConstraints.insets = new java.awt.Insets(28, 22, 20, 24);
         pic.add(progress1, gridBagConstraints);
 
         setLayer(pic, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -46,7 +48,7 @@ public class ImageItem extends javax.swing.JLayeredPane {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pic, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+            .addComponent(pic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -7,27 +7,36 @@ public class ChatLeft extends javax.swing.JLayeredPane {
 
     public ChatLeft() {
         initComponents();
-        txt.setBackground(new Color(236,234,228));
+        txt.setBackground(new Color(236, 234, 228));
     }
-    
-        public void setText(String text){
+
+    public void setText(String text) {
 //        txt.setText(text);
 //        txt.setTime("10:30 PM"); // Testing
 //        txt.sendSuccess();
-          if (text.equals("")){
-              txt.hideText();
-          }else{
-              txt.setText(text);
-          }
+        if (text.equals("")) {
+            txt.hideText();
+        } else {
+            txt.setText(text);
+        }
     }
-    
-    public void setImage(Icon ...images){
+
+    public void setImage(Icon... images) {
         txt.setImage(false, images);
     }
     
-    public void setTime(){
+    public void setImage(String... images) {
+        txt.setImage(false, images);
+    }
+
+    public void setFile(String fileName, String fileSize) {
+        txt.setFile(fileName, fileSize);
+    }
+
+    public void setTime() {
         txt.setTime("10:30 PM");
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

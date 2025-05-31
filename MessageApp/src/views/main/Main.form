@@ -67,7 +67,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="title" alignment="1" pref="890" max="32767" attributes="0"/>
+                  <Component id="title" alignment="1" pref="989" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="body" pref="0" max="32767" attributes="0"/>
@@ -80,7 +80,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="title" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="body" pref="509" max="32767" attributes="0"/>
+                      <Component id="body" pref="517" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -105,7 +105,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace pref="842" max="32767" attributes="0"/>
+                          <EmptySpace pref="941" max="32767" attributes="0"/>
                           <Component id="cmdMinimize" min="-2" pref="18" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="cmdClose" min="-2" max="-2" attributes="0"/>
@@ -158,6 +158,16 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
               <SubComponents>
+                <Component class="views.forms.Loading" name="loading">
+                  <Properties>
+                    <Property name="opaque" type="boolean" value="false"/>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+                      <CardConstraints cardName="card5"/>
+                    </Constraint>
+                  </Constraints>
+                </Component>
                 <Component class="views.forms.Login" name="login">
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">

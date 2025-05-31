@@ -2,9 +2,9 @@ package views.forms;
 
 import events.PublicEvent;
 
-public class P_Login extends javax.swing.JPanel {
+public class P_Register extends javax.swing.JPanel {
 
-    public P_Login() {
+    public P_Register() {
         initComponents();
     }
 
@@ -12,20 +12,32 @@ public class P_Login extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        txtPassword1 = new javax.swing.JPasswordField();
+        lbPassword1 = new javax.swing.JLabel();
         lbTitle = new javax.swing.JLabel();
         lbUser = new javax.swing.JLabel();
         txtUser = new javax.swing.JTextField();
         lbPassword = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
-        btnLogin = new javax.swing.JButton();
+        lbConfirm = new javax.swing.JLabel();
+        txtConfirm = new javax.swing.JPasswordField();
         btnRegister = new javax.swing.JButton();
+        btnBackLogin = new javax.swing.JButton();
+
+        txtPassword1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPassword1ActionPerformed(evt);
+            }
+        });
+
+        lbPassword1.setText("Password");
 
         setBackground(new java.awt.Color(255, 255, 255));
 
         lbTitle.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
         lbTitle.setForeground(new java.awt.Color(160, 160, 160));
         lbTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbTitle.setText("Login");
+        lbTitle.setText("Register");
 
         lbUser.setText("User Name");
 
@@ -45,25 +57,33 @@ public class P_Login extends javax.swing.JPanel {
             }
         });
 
-        btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnLogin.setText("Login");
-        btnLogin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        btnLogin.setContentAreaFilled(false);
-        btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+        lbConfirm.setText("Confirm Password");
+
+        txtConfirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
+                txtConfirmActionPerformed(evt);
             }
         });
 
         btnRegister.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnRegister.setForeground(new java.awt.Color(0, 109, 209));
         btnRegister.setText("Register");
+        btnRegister.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnRegister.setContentAreaFilled(false);
         btnRegister.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegisterActionPerformed(evt);
+            }
+        });
+
+        btnBackLogin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnBackLogin.setForeground(new java.awt.Color(0, 109, 209));
+        btnBackLogin.setText("Back Login");
+        btnBackLogin.setContentAreaFilled(false);
+        btnBackLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBackLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackLoginActionPerformed(evt);
             }
         });
 
@@ -78,9 +98,11 @@ public class P_Login extends javax.swing.JPanel {
                     .addComponent(txtUser)
                     .addComponent(lbUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lbPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRegister, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                    .addComponent(txtPassword))
+                    .addComponent(btnRegister, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnBackLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                    .addComponent(txtPassword)
+                    .addComponent(lbConfirm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtConfirm))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -92,15 +114,19 @@ public class P_Login extends javax.swing.JPanel {
                 .addComponent(lbUser)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbPassword)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
-                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(lbConfirm)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRegister)
-                .addGap(0, 55, Short.MAX_VALUE))
+                .addComponent(txtConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBackLogin)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -112,24 +138,34 @@ public class P_Login extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPasswordActionPerformed
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-
-        PublicEvent.getInstance().getEventLogin().login();
-        
-    }//GEN-LAST:event_btnLoginActionPerformed
-
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        PublicEvent.getInstance().getEventLogin().goRegister();
+        PublicEvent.getInstance().getEventLogin().register();
     }//GEN-LAST:event_btnRegisterActionPerformed
+
+    private void txtPassword1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassword1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPassword1ActionPerformed
+
+    private void txtConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConfirmActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtConfirmActionPerformed
+
+    private void btnBackLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackLoginActionPerformed
+        PublicEvent.getInstance().getEventLogin().goLogin();
+    }//GEN-LAST:event_btnBackLoginActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnBackLogin;
     private javax.swing.JButton btnRegister;
+    private javax.swing.JLabel lbConfirm;
     private javax.swing.JLabel lbPassword;
+    private javax.swing.JLabel lbPassword1;
     private javax.swing.JLabel lbTitle;
     private javax.swing.JLabel lbUser;
+    private javax.swing.JPasswordField txtConfirm;
     private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JPasswordField txtPassword1;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }

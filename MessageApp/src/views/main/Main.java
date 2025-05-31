@@ -1,6 +1,8 @@
 package views.main;
 
+import com.formdev.flatlaf.intellijthemes.FlatArcIJTheme;
 import events.EventImageView;
+import events.EventMain;
 import events.PublicEvent;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -26,12 +28,26 @@ public class Main extends javax.swing.JFrame {
         com.setMinimumSize(new Dimension(900, 500));
         com.setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
         com.setSnapSize(new Dimension(10, 10));
+        login.setVisible(true);
+        loading.setVisible(false);
         viewImage.setVisible(false);
-        home.setVisible(true);
+        home.setVisible(false);
         initEvent();
     }
     
     private void initEvent(){
+        PublicEvent.getInstance().addEventMain(new EventMain(){
+            @Override
+            public void showLoading(boolean show) {
+                loading.setVisible(show);
+            }
+
+            @Override
+            public void initChat() {
+                home.setVisible(true);
+            }
+            
+        });
         PublicEvent.getInstance().addEventImageView(new EventImageView(){
             @Override
             public void viewImage(Icon image){
@@ -56,6 +72,7 @@ public class Main extends javax.swing.JFrame {
         cmdMinimize = new javax.swing.JButton();
         cmdClose = new javax.swing.JButton();
         body = new javax.swing.JLayeredPane();
+        loading = new views.forms.Loading();
         login = new views.forms.Login();
         viewImage = new views.forms.ViewImage();
         home = new views.forms.Home();
@@ -105,7 +122,7 @@ public class Main extends javax.swing.JFrame {
         titleLayout.setHorizontalGroup(
             titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(titleLayout.createSequentialGroup()
-                .addContainerGap(842, Short.MAX_VALUE)
+                .addContainerGap(941, Short.MAX_VALUE)
                 .addComponent(cmdMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmdClose)
@@ -118,6 +135,9 @@ public class Main extends javax.swing.JFrame {
         );
 
         body.setLayout(new java.awt.CardLayout());
+
+        loading.setOpaque(false);
+        body.add(loading, "card5");
         body.add(login, "card4");
         body.setLayer(viewImage, javax.swing.JLayeredPane.POPUP_LAYER);
         body.add(viewImage, "card3");
@@ -127,7 +147,7 @@ public class Main extends javax.swing.JFrame {
         background.setLayout(backgroundLayout);
         backgroundLayout.setHorizontalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(title, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 890, Short.MAX_VALUE)
+            .addComponent(title, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 989, Short.MAX_VALUE)
             .addGroup(backgroundLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(body, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -138,7 +158,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(backgroundLayout.createSequentialGroup()
                 .addComponent(title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
+                .addComponent(body, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -195,11 +215,8 @@ public class Main extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        FlatArcIJTheme.setup();
+        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -218,8 +235,8 @@ public class Main extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Main().setVisible(true);
             }
@@ -233,6 +250,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton cmdClose;
     private javax.swing.JButton cmdMinimize;
     private views.forms.Home home;
+    private views.forms.Loading loading;
     private views.forms.Login login;
     private javax.swing.JPanel title;
     private views.forms.ViewImage viewImage;

@@ -1,16 +1,56 @@
 package views.forms;
 
+import events.EventLogin;
+import events.PublicEvent;
+
 public class Login extends javax.swing.JPanel {
 
     public Login() {
         initComponents();
         init();
     }
-    
-    private void init(){
+
+    private void init() {
+        PublicEvent.getInstance().addEventLogin(new EventLogin() {
+            @Override
+            public void login() {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("Login");
+                        PublicEvent.getInstance().getEventMain().showLoading(true);
+                        try {
+                            Thread.sleep(1000); // For test
+                        } catch (InterruptedException e) {
+
+                        }
+                        PublicEvent.getInstance().getEventMain().showLoading(false);
+                        PublicEvent.getInstance().getEventMain().initChat();
+                        setVisible(false);
+                    }
+
+                }).start();
+            }
+
+            @Override
+            public void register() {
+                System.out.println("Register");
+            }
+
+            @Override
+            public void goRegister() {
+                slide.show(1);
+            }
+
+            @Override
+            public void goLogin() {
+                slide.show(0);
+            }
+
+        });
         P_Login login = new P_Login();
-        System.out.println("Create PLOGIN: " + login);
-        slide.init(login);
+        P_Register register = new P_Register();
+        slide.init(login, register);
     }
 
     @SuppressWarnings("unchecked")
@@ -52,13 +92,13 @@ public class Login extends javax.swing.JPanel {
         appLine.setOpaque(true);
 
         slide.setBackground(new java.awt.Color(255, 255, 255));
-        slide.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 153, 255), 2, true));
+        slide.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         javax.swing.GroupLayout slideLayout = new javax.swing.GroupLayout(slide);
         slide.setLayout(slideLayout);
         slideLayout.setHorizontalGroup(
             slideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 305, Short.MAX_VALUE)
+            .addGap(0, 256, Short.MAX_VALUE)
         );
         slideLayout.setVerticalGroup(
             slideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -84,7 +124,7 @@ public class Login extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(100, 100, 100)
                         .addComponent(slide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)))
                 .addComponent(appLine, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents

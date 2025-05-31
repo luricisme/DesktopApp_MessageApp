@@ -1,6 +1,7 @@
 package views.forms;
 
 import events.PublicEvent;
+import models.LoginModel;
 
 public class P_Login extends javax.swing.JPanel {
 
@@ -114,7 +115,7 @@ public class P_Login extends javax.swing.JPanel {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
 
-        PublicEvent.getInstance().getEventLogin().login();
+        PublicEvent.getInstance().getEventLogin().login(new LoginModel(txtUser.getText(), String.valueOf(txtPassword.getPassword())));
         
     }//GEN-LAST:event_btnLoginActionPerformed
 

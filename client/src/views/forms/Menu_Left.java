@@ -1,10 +1,17 @@
 package views.forms;
 
+import events.EventMenuLeft;
+import events.PublicEvent;
+import java.util.ArrayList;
+import java.util.List;
+import models.UserAccountModel;
 import net.miginfocom.swing.MigLayout;
 import views.components.ItemPeople;
 import views.swing.ScrollBar;
 
 public class Menu_Left extends javax.swing.JPanel {
+
+    private List<UserAccountModel> userAccount;
 
     public Menu_Left() {
         initComponents();
@@ -14,35 +21,47 @@ public class Menu_Left extends javax.swing.JPanel {
     private void init() {
         sp.setVerticalScrollBar(new ScrollBar());
         menuList.setLayout(new MigLayout("fillx", "0[]0", "1[]1"));
+        userAccount = new ArrayList<>();
+        PublicEvent.getInstance().addEventMenuLeft(new EventMenuLeft() {
+            @Override
+            public void newUser(List<UserAccountModel> users) {
+                for (UserAccountModel d : users) {
+                    userAccount.add(d);
+                    menuList.add(new ItemPeople(d.getUserName()), "wrap");
+                    refreshMenuList();
+                }
+            }
+
+        });
         showMessage();
     }
 
     private void showMessage() {
         // Test data
         menuList.removeAll();
-        for (int i = 0; i < 10; i++) {
-            menuList.add(new ItemPeople("People " + i), "wrap");
+        for (UserAccountModel d : userAccount) {
+            menuList.add(new ItemPeople(d.getUserName()), "wrap");
         }
         refreshMenuList();
     }
-    
-    private void showGroups(){
+
+    private void showGroups() {
         menuList.removeAll();
         for (int i = 0; i < 10; i++) {
             menuList.add(new ItemPeople("Group " + i), "wrap");
         }
         refreshMenuList();
     }
-    
-    private void showBox(){
+
+    private void showBox() {
         menuList.removeAll();
         for (int i = 0; i < 10; i++) {
             menuList.add(new ItemPeople("Box " + i), "wrap");
         }
         refreshMenuList();
     }
-    
-    private void refreshMenuList(){
+
+    private void refreshMenuList() {
         menuList.repaint();
         menuList.revalidate();
     }

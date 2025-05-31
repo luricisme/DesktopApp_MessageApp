@@ -1,6 +1,8 @@
 package views.forms;
 
+import events.EventMessage;
 import events.PublicEvent;
+import models.MessageModel;
 import models.RegisterModel;
 
 public class P_Register extends javax.swing.JPanel {
@@ -22,6 +24,7 @@ public class P_Register extends javax.swing.JPanel {
         txtConfirm = new javax.swing.JPasswordField();
         btnRegister = new javax.swing.JButton();
         btnBackLogin = new javax.swing.JButton();
+        lbError = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -78,6 +81,9 @@ public class P_Register extends javax.swing.JPanel {
             }
         });
 
+        lbError.setForeground(new java.awt.Color(255, 51, 51));
+        lbError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -93,7 +99,8 @@ public class P_Register extends javax.swing.JPanel {
                     .addComponent(btnBackLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
                     .addComponent(txtPassword)
                     .addComponent(lbConfirm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtConfirm))
+                    .addComponent(txtConfirm)
+                    .addComponent(lbError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -117,7 +124,9 @@ public class P_Register extends javax.swing.JPanel {
                 .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBackLogin)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbError)
+                .addContainerGap(61, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -141,7 +150,17 @@ public class P_Register extends javax.swing.JPanel {
             txtPassword.grabFocus();
         } else{
             RegisterModel data = new RegisterModel(userName, password);
-            PublicEvent.getInstance().getEventLogin().register(data);
+            PublicEvent.getInstance().getEventLogin().register(data, new EventMessage() {
+                @Override
+                public void callMessage(MessageModel message) {
+                    if(!message.isAction()){
+                        lbError.setText(message.getMessage());
+                    } else{
+//                        PublicEvent.getInstance().getEventLogin().login();
+                        PublicEvent.getInstance().getEventMain().initChat();
+                    }
+                }
+            });
         }
     }//GEN-LAST:event_btnRegisterActionPerformed
 
@@ -158,6 +177,7 @@ public class P_Register extends javax.swing.JPanel {
     private javax.swing.JButton btnBackLogin;
     private javax.swing.JButton btnRegister;
     private javax.swing.JLabel lbConfirm;
+    private javax.swing.JLabel lbError;
     private javax.swing.JLabel lbPassword;
     private javax.swing.JLabel lbTitle;
     private javax.swing.JLabel lbUser;

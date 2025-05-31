@@ -15,6 +15,7 @@ import services.Service;
 import views.swing.ComponentResizer;
 
 public class Main extends javax.swing.JFrame {
+
     public Main() {
         initComponents();
         init();
@@ -36,9 +37,9 @@ public class Main extends javax.swing.JFrame {
         initEvent();
         Service.getInstance().startServer();
     }
-    
-    private void initEvent(){
-        PublicEvent.getInstance().addEventMain(new EventMain(){
+
+    private void initEvent() {
+        PublicEvent.getInstance().addEventMain(new EventMain() {
             @Override
             public void showLoading(boolean show) {
                 loading.setVisible(show);
@@ -47,18 +48,20 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void initChat() {
                 home.setVisible(true);
+                login.setVisible(false);
+                Service.getInstance().getClient().emit("list_user", Service.getInstance().getUser().getUserID());
             }
-            
+
         });
-        PublicEvent.getInstance().addEventImageView(new EventImageView(){
+        PublicEvent.getInstance().addEventImageView(new EventImageView() {
             @Override
-            public void viewImage(Icon image){
+            public void viewImage(Icon image) {
                 System.out.println("Event running");
                 viewImage.viewImage(image);
             }
-            
+
             @Override
-            public void saveImage(Icon image){
+            public void saveImage(Icon image) {
                 System.out.println("Save image next update");
             }
         });
@@ -213,12 +216,13 @@ public class Main extends javax.swing.JFrame {
 
     private int pX;
     private int pY;
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         FlatArcIJTheme.setup();
-        
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -226,17 +230,12 @@ public class Main extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
+        //</editor-fold>
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {

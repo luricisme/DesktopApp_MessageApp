@@ -1,9 +1,13 @@
 package views.forms;
 
 import events.EventLogin;
+import events.EventMessage;
 import events.PublicEvent;
 import io.socket.client.Ack;
+import models.LoginModel;
+import models.MessageModel;
 import models.RegisterModel;
+import models.UserAccountModel;
 import services.Service;
 
 public class Login extends javax.swing.JPanel {
@@ -16,33 +20,52 @@ public class Login extends javax.swing.JPanel {
     private void init() {
         PublicEvent.getInstance().addEventLogin(new EventLogin() {
             @Override
-            public void login() {
+            public void login(LoginModel data) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         System.out.println("Login");
                         PublicEvent.getInstance().getEventMain().showLoading(true);
-                        try {
-                            Thread.sleep(1000); // For test
-                        } catch (InterruptedException e) {
+                        Service.getInstance().getClient().emit("login", data.toJSONObject(), new Ack() {
+                            @Override
+                            public void call(Object... os) {
+                                if (os.length > 0) {
+                                    boolean action = (Boolean) os[0];
+                                    if (action) {
+                                        Service.getInstance().setUser(new UserAccountModel(os[1]));
+                                        PublicEvent.getInstance().getEventMain().showLoading(false);
+                                        PublicEvent.getInstance().getEventMain().initChat();
+                                    } else {
+                                        // Password wrong
+                                        PublicEvent.getInstance().getEventMain().showLoading(false);
+                                    }
+                                } else {
+                                    PublicEvent.getInstance().getEventMain().showLoading(false);
+                                }
+                            }
 
-                        }
-                        PublicEvent.getInstance().getEventMain().showLoading(false);
-                        PublicEvent.getInstance().getEventMain().initChat();
-                        setVisible(false);
+                        });
                     }
 
                 }).start();
             }
 
             @Override
-            public void register(RegisterModel data) {
+            public void register(RegisterModel data, EventMessage message) {
                 System.out.println("Register");
                 System.out.println("Data send: " + data.getUserName() + " Pass: " + data.getPassword());
-                Service.getInstance().getClient().emit("register", data.toJsonObject(), new Ack(){
+                Service.getInstance().getClient().emit("register", data.toJsonObject(), new Ack() {
                     @Override
                     public void call(Object... os) {
-                        
+                        if (os.length > 0) {
+                            MessageModel msg = new MessageModel((boolean) os[0], os[1].toString());
+                            if (msg.isAction()) {
+                                UserAccountModel user = new UserAccountModel(os[2]);
+                                Service.getInstance().setUser(user);
+                            }
+                            message.callMessage(msg);
+                            // Call message back when done register
+                        }
                     }
                 });
             }

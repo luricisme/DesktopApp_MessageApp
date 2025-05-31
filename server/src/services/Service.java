@@ -1,10 +1,13 @@
 package services;
 
+import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.listener.ConnectListener;
+import com.corundumstudio.socketio.listener.DataListener;
 import javax.swing.JTextArea;
+import models.RegisterModel;
 
 public class Service {
     private static Service instance;
@@ -34,6 +37,16 @@ public class Service {
                 textArea.append("One client connected\n");
             }
         });
+        
+        server.addEventListener("register", RegisterModel.class, new DataListener<RegisterModel>(){
+            @Override
+            public void onData(SocketIOClient sioc, RegisterModel t, AckRequest ar) throws Exception {
+                System.out.println("Data received: " + t.getUserName() + " Pass: " + t.getPassword());
+                textArea.append("User Register: " + t.getUserName() + " Pass: " + t.getPassword() + "\n");
+            }
+            
+        });
+        
         server.start();
         textArea.append("Server has start on port :" + PORT_NUMBER + "\n");
     }

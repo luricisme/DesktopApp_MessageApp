@@ -1,6 +1,7 @@
 package views.forms;
 
 import events.PublicEvent;
+import models.RegisterModel;
 
 public class P_Register extends javax.swing.JPanel {
 
@@ -12,8 +13,6 @@ public class P_Register extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtPassword1 = new javax.swing.JPasswordField();
-        lbPassword1 = new javax.swing.JLabel();
         lbTitle = new javax.swing.JLabel();
         lbUser = new javax.swing.JLabel();
         txtUser = new javax.swing.JTextField();
@@ -23,14 +22,6 @@ public class P_Register extends javax.swing.JPanel {
         txtConfirm = new javax.swing.JPasswordField();
         btnRegister = new javax.swing.JButton();
         btnBackLogin = new javax.swing.JButton();
-
-        txtPassword1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPassword1ActionPerformed(evt);
-            }
-        });
-
-        lbPassword1.setText("Password");
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -139,12 +130,20 @@ public class P_Register extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPasswordActionPerformed
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        PublicEvent.getInstance().getEventLogin().register();
+        String userName = txtUser.getText().trim();
+        String password = String.valueOf(txtPassword.getPassword());
+        String confirmPassword = String.valueOf(txtConfirm.getPassword());
+        if(userName.equals("")){
+            txtUser.grabFocus();
+        } else if(password.equals("")){
+            txtPassword.grabFocus();
+        } else if(!password.equals(confirmPassword)){
+            txtPassword.grabFocus();
+        } else{
+            RegisterModel data = new RegisterModel(userName, password);
+            PublicEvent.getInstance().getEventLogin().register(data);
+        }
     }//GEN-LAST:event_btnRegisterActionPerformed
-
-    private void txtPassword1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassword1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPassword1ActionPerformed
 
     private void txtConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConfirmActionPerformed
         // TODO add your handling code here:
@@ -160,12 +159,10 @@ public class P_Register extends javax.swing.JPanel {
     private javax.swing.JButton btnRegister;
     private javax.swing.JLabel lbConfirm;
     private javax.swing.JLabel lbPassword;
-    private javax.swing.JLabel lbPassword1;
     private javax.swing.JLabel lbTitle;
     private javax.swing.JLabel lbUser;
     private javax.swing.JPasswordField txtConfirm;
     private javax.swing.JPasswordField txtPassword;
-    private javax.swing.JPasswordField txtPassword1;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }

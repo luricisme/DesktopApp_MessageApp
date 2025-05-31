@@ -11,6 +11,7 @@ import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import services.Service;
 import views.swing.ComponentResizer;
 
 public class Main extends javax.swing.JFrame {
@@ -33,6 +34,7 @@ public class Main extends javax.swing.JFrame {
         viewImage.setVisible(false);
         home.setVisible(false);
         initEvent();
+        Service.getInstance().startServer();
     }
     
     private void initEvent(){

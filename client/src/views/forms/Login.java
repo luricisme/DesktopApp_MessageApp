@@ -2,6 +2,9 @@ package views.forms;
 
 import events.EventLogin;
 import events.PublicEvent;
+import io.socket.client.Ack;
+import models.RegisterModel;
+import services.Service;
 
 public class Login extends javax.swing.JPanel {
 
@@ -33,8 +36,15 @@ public class Login extends javax.swing.JPanel {
             }
 
             @Override
-            public void register() {
+            public void register(RegisterModel data) {
                 System.out.println("Register");
+                System.out.println("Data send: " + data.getUserName() + " Pass: " + data.getPassword());
+                Service.getInstance().getClient().emit("register", data.toJsonObject(), new Ack(){
+                    @Override
+                    public void call(Object... os) {
+                        
+                    }
+                });
             }
 
             @Override

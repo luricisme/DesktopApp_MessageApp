@@ -1,6 +1,8 @@
 package views.components;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,7 +22,7 @@ public class MorePanel extends javax.swing.JPanel {
         setLayout(new MigLayout("fillx"));
         panelHeader = new JPanel();
         panelHeader.setLayout(new BoxLayout(panelHeader, BoxLayout.LINE_AXIS));
-        panelHeader.add(getButtonFile());
+        panelHeader.add(getButtonImage());
         add(panelHeader, "w 100%, h 30!, wrap");
         panelDetail = new JPanel();
         panelDetail.setLayout(new WrapLayout(WrapLayout.LEFT));   
@@ -33,10 +35,16 @@ public class MorePanel extends javax.swing.JPanel {
         add(ch, "w 100%, h 100%");
     }
     
-    private JButton getButtonFile(){
+    private JButton getButtonImage(){
         OptionButton cmd = new OptionButton();
-        cmd.setIcon(new ImageIcon(getClass().getResource("")));
-        
+        cmd.setIcon(new ImageIcon(getClass().getResource("/icons/image.png")));  
+        cmd.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+            
+        });
         return cmd;
     }
     

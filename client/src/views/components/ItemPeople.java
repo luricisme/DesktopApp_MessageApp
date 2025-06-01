@@ -1,14 +1,30 @@
 package views.components;
 
+import events.PublicEvent;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import models.UserAccountModel;
 
 public class ItemPeople extends javax.swing.JPanel {
-    public ItemPeople(String name) {
+    private UserAccountModel user;
+
+    public UserAccountModel getUser() {
+        return user;
+    }
+    
+    private boolean mouseOver;
+    
+    public ItemPeople(UserAccountModel user) {
+        this.user = user;
         initComponents();
-        userName.setText(name);
+        userName.setText(user.getUserName());
+        activeStatus.setActive(user.isStatus());
         init();
+    }
+    
+    public void updateStatus(){
+        activeStatus.setActive(user.isStatus());
     }
     
     private void init(){
@@ -16,11 +32,20 @@ public class ItemPeople extends javax.swing.JPanel {
             @Override
             public void mouseEntered(MouseEvent me){
                 setBackground(new Color(228, 226, 207));
+                mouseOver = true;
             }
             
             @Override
             public void mouseExited(MouseEvent me){
                 setBackground(new Color(236, 234, 228));
+                mouseOver = false;
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if(mouseOver){
+                    PublicEvent.getInstance().getEventMain().selectUser(user);
+                }
             }
         });
     }
@@ -36,6 +61,8 @@ public class ItemPeople extends javax.swing.JPanel {
 
         userAvatar = new views.swing.ImageAvatar();
         userName = new javax.swing.JLabel();
+        lbStatus = new javax.swing.JLabel();
+        activeStatus = new views.swing.ActiveStatus();
 
         setBackground(new java.awt.Color(236, 234, 228));
 
@@ -46,6 +73,13 @@ public class ItemPeople extends javax.swing.JPanel {
         userName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         userName.setText("Name");
 
+        lbStatus.setBackground(new java.awt.Color(249, 249, 249));
+        lbStatus.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        lbStatus.setForeground(new java.awt.Color(153, 148, 148));
+        lbStatus.setText("Status");
+
+        activeStatus.setActive(true);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -53,7 +87,13 @@ public class ItemPeople extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(userAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(userName, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(userName, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1)
+                        .addComponent(activeStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -61,12 +101,21 @@ public class ItemPeople extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(userAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(userName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(userName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(activeStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbStatus))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private views.swing.ActiveStatus activeStatus;
+    private javax.swing.JLabel lbStatus;
     private views.swing.ImageAvatar userAvatar;
     private javax.swing.JLabel userName;
     // End of variables declaration//GEN-END:variables

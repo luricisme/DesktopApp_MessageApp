@@ -35,15 +35,31 @@ public class Service {
                 public void call(Object... os) {
                     // List user 
                     List<UserAccountModel> users = new ArrayList<>();
-                    for(Object o: os){
+                    for (Object o : os) {
                         UserAccountModel u = new UserAccountModel(o);
-                        if(u.getUserID() != user.getUserID()){
+                        if (u.getUserID() != user.getUserID()) {
                             users.add(u);
                         }
                     }
                     PublicEvent.getInstance().getEventMenuLeft().newUser(users);
                 }
             });
+
+            client.on("user_status", new Emitter.Listener() {
+                @Override
+                public void call(Object... os) {
+                    int userID = (Integer)os[0];
+                    boolean status = (Boolean) os[1];
+                    if(status){
+                        // Connect
+                        PublicEvent.getInstance().getEventMenuLeft().userConnect(userID);
+                    } else{
+                        // Disconnect
+                        PublicEvent.getInstance().getEventMenuLeft().userDisconnect(userID);
+                    }
+                }
+            });
+
             client.open();
         } catch (URISyntaxException e) {
             error(e);

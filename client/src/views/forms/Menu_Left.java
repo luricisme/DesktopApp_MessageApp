@@ -2,6 +2,7 @@ package views.forms;
 
 import events.EventMenuLeft;
 import events.PublicEvent;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
 import models.UserAccountModel;
@@ -27,8 +28,50 @@ public class Menu_Left extends javax.swing.JPanel {
             public void newUser(List<UserAccountModel> users) {
                 for (UserAccountModel d : users) {
                     userAccount.add(d);
-                    menuList.add(new ItemPeople(d.getUserName()), "wrap");
+                    menuList.add(new ItemPeople(d), "wrap");
                     refreshMenuList();
+                }
+            }
+
+            @Override
+            public void userConnect(int userID) {
+                for (UserAccountModel u : userAccount) {
+                    if (u.getUserID() == userID) {
+                        u.setStatus(true);
+                        PublicEvent.getInstance().getEventMain().updateUser(u);
+                        break;
+                    }
+                }
+
+                if (messageBtn.isSelected()) {
+                    for (Component com : menuList.getComponents()) {
+                        ItemPeople item = (ItemPeople) com;
+                        if (item.getUser().getUserID() == userID) {
+                            item.updateStatus();
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void userDisconnect(int userID) {
+                for (UserAccountModel u : userAccount) {
+                    if (u.getUserID() == userID) {
+                        u.setStatus(false);
+                        PublicEvent.getInstance().getEventMain().updateUser(u);
+                        break;
+                    }
+                }
+
+                if (messageBtn.isSelected()) {
+                    for (Component com : menuList.getComponents()) {
+                        ItemPeople item = (ItemPeople) com;
+                        if (item.getUser().getUserID() == userID) {
+                            item.updateStatus();
+                            break;
+                        }
+                    }
                 }
             }
 
@@ -40,7 +83,7 @@ public class Menu_Left extends javax.swing.JPanel {
         // Test data
         menuList.removeAll();
         for (UserAccountModel d : userAccount) {
-            menuList.add(new ItemPeople(d.getUserName()), "wrap");
+            menuList.add(new ItemPeople(d), "wrap");
         }
         refreshMenuList();
     }
@@ -48,7 +91,7 @@ public class Menu_Left extends javax.swing.JPanel {
     private void showGroups() {
         menuList.removeAll();
         for (int i = 0; i < 10; i++) {
-            menuList.add(new ItemPeople("Group " + i), "wrap");
+            menuList.add(new ItemPeople(null), "wrap");
         }
         refreshMenuList();
     }
@@ -56,7 +99,7 @@ public class Menu_Left extends javax.swing.JPanel {
     private void showBox() {
         menuList.removeAll();
         for (int i = 0; i < 10; i++) {
-            menuList.add(new ItemPeople("Box " + i), "wrap");
+            menuList.add(new ItemPeople(null), "wrap");
         }
         refreshMenuList();
     }
@@ -168,7 +211,7 @@ public class Menu_Left extends javax.swing.JPanel {
             messageBtn.setSelected(false);
             groupBtn.setSelected(false);
             boxBtn.setSelected(true);
-            showBox();
+//            showBox();
         }
     }//GEN-LAST:event_boxBtnActionPerformed
 
@@ -177,7 +220,7 @@ public class Menu_Left extends javax.swing.JPanel {
             messageBtn.setSelected(false);
             groupBtn.setSelected(true);
             boxBtn.setSelected(false);
-            showGroups();
+//            showGroups();
         }
     }//GEN-LAST:event_groupBtnActionPerformed
 

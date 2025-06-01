@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import models.ClientModel;
 import models.LoginModel;
 import models.MessageModel;
 import models.RegisterModel;
@@ -88,7 +89,7 @@ public class UserService {
             String userName = r.getString(2);
             String gender = r.getString(3);
             String image = r.getString(4);
-            list.add(new UserAccountModel(userID, userName, gender, image, true));
+            list.add(new UserAccountModel(userID, userName, gender, image, checkUserStatus(userID)));
         }
         
         r.close();
@@ -113,6 +114,16 @@ public class UserService {
         p.close();
         
         return data;
+    }
+    
+    private boolean checkUserStatus(int userID){
+        List<ClientModel> clients = Service.getInstance(null).getListClient();
+        for(ClientModel c: clients){
+            if(c.getUser().getUserID() == userID){
+                return true;
+            }
+        }
+        return false;
     }
 
     // SQL

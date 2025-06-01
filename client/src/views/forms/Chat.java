@@ -2,10 +2,7 @@ package views.forms;
 
 import events.EventChat;
 import events.PublicEvent;
-import java.awt.Adjustable;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
-import javax.swing.JScrollBar;
+import models.UserAccountModel;
 import net.miginfocom.swing.MigLayout;
 import views.components.ChatBody;
 import views.components.ChatBottom;
@@ -13,6 +10,10 @@ import views.components.ChatTitle;
 
 public class Chat extends javax.swing.JPanel {
 
+    private ChatTitle chatTitle;
+    private ChatBody chatBody;
+    private ChatBottom chatBottom;
+    
     public Chat() {
         initComponents();
         init();
@@ -20,9 +21,9 @@ public class Chat extends javax.swing.JPanel {
 
     private void init() {
         setLayout(new MigLayout("fillx, filly", "0[fill]0", "0[]0[100%, bottom]0[shrink 0]0"));
-        ChatTitle chatTitle = new ChatTitle();
-        ChatBody chatBody = new ChatBody();
-        ChatBottom chatBottom = new ChatBottom();
+        chatTitle = new ChatTitle();
+        chatBody = new ChatBody();
+        chatBottom = new ChatBottom();
         PublicEvent.getInstance().addEventChat(new EventChat() {
             @Override
             public void sendMessage(String text) {
@@ -32,6 +33,16 @@ public class Chat extends javax.swing.JPanel {
         add(chatTitle, "wrap");
         add(chatBody, "grow, push, wrap");
         add(chatBottom, "h ::50%");
+//        chatBody.setVisible(false);
+    }
+    
+    public void setUser(UserAccountModel user){
+        chatTitle.setUserName(user);
+        chatBottom.setUser(user);
+    }
+    
+    public void updateUser(UserAccountModel user){
+        chatTitle.updateUser(user);
     }
 
     @SuppressWarnings("unchecked")

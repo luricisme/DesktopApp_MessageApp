@@ -11,7 +11,9 @@ import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import models.UserAccountModel;
 import services.Service;
+import views.forms.Chat;
 import views.swing.ComponentResizer;
 
 public class Main extends javax.swing.JFrame {
@@ -50,6 +52,16 @@ public class Main extends javax.swing.JFrame {
                 home.setVisible(true);
                 login.setVisible(false);
                 Service.getInstance().getClient().emit("list_user", Service.getInstance().getUser().getUserID());
+            }
+
+            @Override
+            public void selectUser(UserAccountModel user) {
+                home.setUser(user);
+            }
+
+            @Override
+            public void updateUser(UserAccountModel user) {
+                home.updateUser(user);
             }
 
         });

@@ -88,21 +88,21 @@ public class Menu_Left extends javax.swing.JPanel {
         refreshMenuList();
     }
 
-    private void showGroups() {
-        menuList.removeAll();
-        for (int i = 0; i < 10; i++) {
-            menuList.add(new ItemPeople(null), "wrap");
-        }
-        refreshMenuList();
-    }
+//    private void showGroups() {
+//        menuList.removeAll();
+//        for (int i = 0; i < 10; i++) {
+//            menuList.add(new ItemPeople(null), "wrap");
+//        }
+//        refreshMenuList();
+//    }
 
-    private void showBox() {
-        menuList.removeAll();
-        for (int i = 0; i < 10; i++) {
-            menuList.add(new ItemPeople(null), "wrap");
-        }
-        refreshMenuList();
-    }
+//    private void showBox() {
+//        menuList.removeAll();
+//        for (int i = 0; i < 10; i++) {
+//            menuList.add(new ItemPeople(null), "wrap");
+//        }
+//        refreshMenuList();
+//    }
 
     private void refreshMenuList() {
         menuList.repaint();

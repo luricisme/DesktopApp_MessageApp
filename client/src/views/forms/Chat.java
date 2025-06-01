@@ -2,6 +2,8 @@ package views.forms;
 
 import events.EventChat;
 import events.PublicEvent;
+import models.ReceiveMessageModel;
+import models.SendMessageModel;
 import models.UserAccountModel;
 import net.miginfocom.swing.MigLayout;
 import views.components.ChatBody;
@@ -26,8 +28,16 @@ public class Chat extends javax.swing.JPanel {
         chatBottom = new ChatBottom();
         PublicEvent.getInstance().addEventChat(new EventChat() {
             @Override
-            public void sendMessage(String text) {
-                chatBody.addItemRight(text);
+            public void sendMessage(SendMessageModel data) {
+                System.out.println("Toi dang day ne");
+                chatBody.addItemRight(data);
+            }
+
+            @Override
+            public void receiveMessage(ReceiveMessageModel data) {
+                if(chatTitle.getUser().getUserID() == data.getFromUserID()){
+                    chatBody.addItemLeft(data);
+                }
             }
         });
         add(chatTitle, "wrap");
@@ -39,6 +49,7 @@ public class Chat extends javax.swing.JPanel {
     public void setUser(UserAccountModel user){
         chatTitle.setUserName(user);
         chatBottom.setUser(user);
+        chatBody.clearChat();
     }
     
     public void updateUser(UserAccountModel user){

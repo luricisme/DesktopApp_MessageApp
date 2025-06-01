@@ -7,6 +7,8 @@ import java.awt.event.AdjustmentListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollBar;
+import models.ReceiveMessageModel;
+import models.SendMessageModel;
 import net.miginfocom.swing.MigLayout;
 import views.swing.ScrollBar;
 
@@ -15,16 +17,7 @@ public class ChatBody extends javax.swing.JPanel {
     public ChatBody() {
         initComponents();
         init();
-        addItemLeft("Hello anh ban chao anh ban nha aaaaaaaaa8888888888888888888888888aaaa", "Luric", new ImageIcon(getClass().getResource("/test/msg01.jpg")));
-        addItemRight("378474747474747474", new ImageIcon(getClass().getResource("/test/msg01.jpg")));
-//        addDate("29/05/2025");
-//        String img[] = {"LJMaR{Sik@ozK-t7RlRjO]oeMxxa", "LKJQ=+t301D%~XxaD*t700WD?H%1"};
-//        addItemLeft("Hello anh ban chao anh ban nha aaaaaaaaaaaaa", "Luric", img);
-//        addItemLeft("Hello anh ban chao anh ban nha aaaaaaaaaaaaa", "Luric", new ImageIcon(getClass().getResource("/test/ava01.jpg")));
-//        addItemRight("378474747474747474", new ImageIcon(getClass().getResource("/test/ava01.jpg")));
-//        addItemLeft("", "Luric", new ImageIcon(getClass().getResource("/test/ava01.jpg")));
-//        addItemFile("", "Darius", "my_doc.pdf", "1 MB");
-//        addItemFileRight("", "MyFile.rar", "68.44 MB");
+//        addItemRight("Ok\nWhat is his name ?");
     }
 
     private void init() {
@@ -33,30 +26,34 @@ public class ChatBody extends javax.swing.JPanel {
         sp.getVerticalScrollBar().setBackground(Color.WHITE);
     }
 
-    public void addItemLeft(String text, String user, Icon ...images) {
+//    public void addItemLeft(ReceiveMessageModel data) {
+//        ChatLeftWithProfile item = new ChatLeftWithProfile();
+//        item.setText(data.getText());
+//        item.setTime();
+//        body.add(item, "wrap, w 100::80%");
+//        repaint();
+//        revalidate();
+//    }
+    public void addItemLeft(ReceiveMessageModel data) {
+        ChatLeft item = new ChatLeft();
+        item.setText(data.getText());
+        item.setTime();
+        body.add(item, "wrap, w 100::80%");
+        repaint();
+        revalidate();
+    }
+
+    public void addItemLeft(String text, String user, String[] images) {
         ChatLeftWithProfile item = new ChatLeftWithProfile();
         item.setText(text);
         item.setImage(images);
         item.setTime();
         item.setUserProfile(user);
         body.add(item, "wrap, w 100::80%");
-        //  ::80% set max with 80%
         body.repaint();
         body.revalidate();
     }
-    
-    public void addItemLeft(String text, String user, String []images) {
-        ChatLeftWithProfile item = new ChatLeftWithProfile();
-        item.setText(text);
-        item.setImage(images);
-        item.setTime();
-        item.setUserProfile(user);
-        body.add(item, "wrap, w 100::80%");
-        //  ::80% set max with 80%
-        body.repaint();
-        body.revalidate();
-    }
-    
+
     public void addItemFile(String text, String user, String fileName, String fileSize) {
         ChatLeftWithProfile item = new ChatLeftWithProfile();
         item.setText(text);
@@ -64,40 +61,56 @@ public class ChatBody extends javax.swing.JPanel {
         item.setTime();
         item.setUserProfile(user);
         body.add(item, "wrap, w 100::80%");
-        //  ::80% set max with 80%
         body.repaint();
         body.revalidate();
     }
-    
-    public void addItemRight(String text, Icon ...images) {
+
+    public void addItemRight(SendMessageModel data) {
         ChatRight item = new ChatRight();
-        item.setText(text);
-        item.setImage(images);
-        body.add(item, "wrap, al right, w 100::80%");
-        //  ::80% set max with 80%
-        body.repaint();
-        body.revalidate();
+        System.out.println("SendMessageModel text: " + data.getText());
+        item.setText(data.getText());
         item.setTime();
+        body.add(item, "wrap, al right, w 100::80%");
+        repaint();
+        revalidate();
         scrollToBottom();
     }
     
+//    public void addItemRight(String text, Icon... image) {
+//        ChatRight item = new ChatRight();
+//        item.setText(text);
+//        item.setImage(image);
+//        body.add(item, "wrap, al right, w 100::80%");
+//        //  ::80% set max with 80%
+//        body.repaint();
+//        body.revalidate();
+//        item.setTime();
+//        scrollToBottom();
+//    }
+
     public void addItemFileRight(String text, String fileName, String fileSize) {
         ChatRight item = new ChatRight();
         item.setText(text);
         item.setFile(fileName, fileSize);
         body.add(item, "wrap, al right, w 100::80%");
-        //  ::80% set max with 80%
         body.repaint();
         body.revalidate();
     }
-
-    public void addDate(String date){
+    
+    public void addDate(String date) {
         ChatDate item = new ChatDate();
         item.setDate(date);
         body.add(item, "wrap, al center");
         body.repaint();
         body.revalidate();
     }
+    
+    public void clearChat(){
+        body.removeAll();
+        repaint();
+        revalidate();
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

@@ -10,13 +10,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import models.SendMessageModel;
 import models.UserAccountModel;
 import net.miginfocom.swing.MigLayout;
+import services.Service;
 import views.swing.JIMSendTextPane;
 import views.swing.ScrollBar;
 
 public class ChatBottom extends javax.swing.JPanel {
-    
+
     private UserAccountModel user;
 
     public UserAccountModel getUser() {
@@ -26,20 +28,21 @@ public class ChatBottom extends javax.swing.JPanel {
     public void setUser(UserAccountModel user) {
         this.user = user;
     }
-    
+
     public ChatBottom() {
         initComponents();
         init();
     }
-    
-    public void init(){
-        setLayout(new MigLayout("fillx, filly", "2[fill]0[]2", "2[fill]2"));
+
+    public void init() {
+        mig = new MigLayout("fillx, filly", "2[fill]0[]2", "2[fill]2[]0");
+        setLayout(mig);
         JScrollPane scroll = new JScrollPane();
         scroll.setBorder(null);
         JIMSendTextPane txt = new JIMSendTextPane();
-        txt.addKeyListener(new KeyAdapter(){
+        txt.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent ke){
+            public void keyTyped(KeyEvent ke) {
                 refresh();
             }
         });
@@ -50,7 +53,7 @@ public class ChatBottom extends javax.swing.JPanel {
         scroll.setVerticalScrollBar(sb);
         add(scroll, "w 100%");
         JPanel panel = new JPanel();
-        panel.setLayout(new MigLayout("filly", "0[]0", "0[bottom]0"));
+        panel.setLayout(new MigLayout("filly", "0[]3[]0", "0[bottom]0"));
         panel.setPreferredSize(new Dimension(30, 28));
         JButton cmd = new JButton();
         cmd.setBorder(null);
@@ -60,21 +63,50 @@ public class ChatBottom extends javax.swing.JPanel {
         cmd.setIcon(new ImageIcon(getClass().getResource("/icons/send.png")));
         cmd.addActionListener((e) -> {
             String text = txt.getText().trim();
-            if(!text.equals("")){
+            if (!text.equals("")) {
                 // Add chat item
-                PublicEvent.getInstance().getEventChat().sendMessage(text);
+                SendMessageModel message = new SendMessageModel(Service.getInstance().getUser().getUserID(), user.getUserID(), text);
+                send(message);
+                PublicEvent.getInstance().getEventChat().sendMessage(message);
                 txt.setText("");
                 txt.grabFocus();
                 refresh();
-            } else{
+            } else {
                 txt.grabFocus();
             }
         });
+
+        JButton cmdMore = new JButton();
+        cmdMore.setBorder(null);
+        panel.setBackground(Color.WHITE);
+        cmdMore.setContentAreaFilled(false);
+        cmdMore.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        cmdMore.setIcon(new ImageIcon(getClass().getResource("/icons/more_disable.png")));
+        cmdMore.addActionListener((e) -> {
+            if(morePanel.isVisible()){
+                cmdMore.setIcon(new ImageIcon(getClass().getResource("/icons/more_disable.png")));
+                morePanel.setVisible(false);
+                mig.setComponentConstraints(morePanel, "dock south, h 0!");
+                revalidate();
+            } else{
+                cmdMore.setIcon(new ImageIcon(getClass().getResource("/icons/more.png")));
+                morePanel.setVisible(true);
+                mig.setComponentConstraints(morePanel, "dock south, h 100!");
+                revalidate();
+            }
+        });
+        panel.add(cmdMore);
         panel.add(cmd);
-        add(panel);
+        add(panel, "wrap");
+        morePanel = new MorePanel();
+        add(morePanel, "dock south, h 0!");
     }
-    
-    private void refresh(){
+
+    private void send(SendMessageModel data) {
+        Service.getInstance().getClient().emit("send_to_user", data.toJSONObject());
+    }
+
+    private void refresh() {
         revalidate();
     }
 
@@ -94,6 +126,12 @@ public class ChatBottom extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public ChatBottom(UserAccountModel user) {
+        this.user = user;
+    }
+
+    private MigLayout mig;
+    private MorePanel morePanel;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

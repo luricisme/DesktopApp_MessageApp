@@ -1,5 +1,6 @@
 package views.components;
 
+import app.MessageType;
 import events.PublicEvent;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -27,6 +28,7 @@ public class ChatBottom extends javax.swing.JPanel {
 
     public void setUser(UserAccountModel user) {
         this.user = user;
+        morePanel.setUser(user);
     }
 
     public ChatBottom() {
@@ -44,6 +46,10 @@ public class ChatBottom extends javax.swing.JPanel {
             @Override
             public void keyTyped(KeyEvent ke) {
                 refresh();
+                if (ke.getKeyChar() == 10 && ke.isControlDown()) {
+                    // User press control + enter
+                    eventSend(txt);
+                }
             }
         });
         txt.setHintText("Write Message Here ...");
@@ -62,18 +68,7 @@ public class ChatBottom extends javax.swing.JPanel {
         cmd.setCursor(new Cursor(Cursor.HAND_CURSOR));
         cmd.setIcon(new ImageIcon(getClass().getResource("/icons/send.png")));
         cmd.addActionListener((e) -> {
-            String text = txt.getText().trim();
-            if (!text.equals("")) {
-                // Add chat item
-                SendMessageModel message = new SendMessageModel(Service.getInstance().getUser().getUserID(), user.getUserID(), text);
-                send(message);
-                PublicEvent.getInstance().getEventChat().sendMessage(message);
-                txt.setText("");
-                txt.grabFocus();
-                refresh();
-            } else {
-                txt.grabFocus();
-            }
+            eventSend(txt);
         });
 
         JButton cmdMore = new JButton();
@@ -83,15 +78,15 @@ public class ChatBottom extends javax.swing.JPanel {
         cmdMore.setCursor(new Cursor(Cursor.HAND_CURSOR));
         cmdMore.setIcon(new ImageIcon(getClass().getResource("/icons/more_disable.png")));
         cmdMore.addActionListener((e) -> {
-            if(morePanel.isVisible()){
+            if (morePanel.isVisible()) {
                 cmdMore.setIcon(new ImageIcon(getClass().getResource("/icons/more_disable.png")));
                 morePanel.setVisible(false);
                 mig.setComponentConstraints(morePanel, "dock south, h 0!");
                 revalidate();
-            } else{
+            } else {
                 cmdMore.setIcon(new ImageIcon(getClass().getResource("/icons/more.png")));
                 morePanel.setVisible(true);
-                mig.setComponentConstraints(morePanel, "dock south, h 100!");
+                mig.setComponentConstraints(morePanel, "dock south, h 170!");
                 revalidate();
             }
         });
@@ -100,6 +95,21 @@ public class ChatBottom extends javax.swing.JPanel {
         add(panel, "wrap");
         morePanel = new MorePanel();
         add(morePanel, "dock south, h 0!");
+    }
+
+    private void eventSend(JIMSendTextPane txt) {
+        String text = txt.getText().trim();
+        if (!text.equals("")) {
+            // Add chat item
+            SendMessageModel message = new SendMessageModel(MessageType.TEXT, Service.getInstance().getUser().getUserID(), user.getUserID(), text);
+            send(message);
+            PublicEvent.getInstance().getEventChat().sendMessage(message);
+            txt.setText("");
+            txt.grabFocus();
+            refresh();
+        } else {
+            txt.grabFocus();
+        }
     }
 
     private void send(SendMessageModel data) {

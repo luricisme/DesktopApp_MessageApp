@@ -1,6 +1,16 @@
 package models;
 
+import app.MessageType;
+
 public class SendMessageModel {
+
+    public int getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(int messageType) {
+        this.messageType = messageType;
+    }
 
     public int getFromUserID() {
         return fromUserID;
@@ -25,17 +35,19 @@ public class SendMessageModel {
     public void setText(String text) {
         this.text = text;
     }
-    
-    int fromUserID;
-    int toUserID;
-    String text;
 
-    public SendMessageModel() {
-    }
-    
-    public SendMessageModel(int fromUserID, int toUserID, String text) {
+    public SendMessageModel(int messageType, int fromUserID, int toUserID, String text) {
+        this.messageType = messageType;
         this.fromUserID = fromUserID;
         this.toUserID = toUserID;
         this.text = text;
     }
+
+    public SendMessageModel() {
+    }
+
+    private int messageType;
+    private int fromUserID;
+    private int toUserID;
+    private String text;
 }

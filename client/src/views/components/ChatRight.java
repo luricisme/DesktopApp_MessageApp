@@ -2,6 +2,7 @@ package views.components;
 
 import java.awt.Color;
 import javax.swing.Icon;
+import models.FileSenderModel;
 
 public class ChatRight extends javax.swing.JLayeredPane {
 
@@ -22,8 +23,8 @@ public class ChatRight extends javax.swing.JLayeredPane {
         txt.seen();
     }
 
-    public void setImage(Icon... images) {
-        txt.setImage(true, images);
+    public void setImage(FileSenderModel filesSender) {
+        txt.setImage(true, filesSender);
     }
 
     public void setImage(String... images) {
@@ -32,6 +33,11 @@ public class ChatRight extends javax.swing.JLayeredPane {
 
     public void setFile(String fileName, String fileSize) {
         txt.setFile(fileName, fileSize);
+    }
+    
+    public void setEmoji(Icon icon){
+        txt.hideText();
+        txt.setEmoji(true, icon);
     }
 
     public void setTime() {

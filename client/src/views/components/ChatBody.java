@@ -1,15 +1,15 @@
 package views.components;
 
+import app.MessageType;
 import java.awt.Adjustable;
 import java.awt.Color;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JScrollBar;
 import models.ReceiveMessageModel;
 import models.SendMessageModel;
 import net.miginfocom.swing.MigLayout;
+import views.emoji.Emoji;
 import views.swing.ScrollBar;
 
 public class ChatBody extends javax.swing.JPanel {
@@ -26,21 +26,21 @@ public class ChatBody extends javax.swing.JPanel {
         sp.getVerticalScrollBar().setBackground(Color.WHITE);
     }
 
-//    public void addItemLeft(ReceiveMessageModel data) {
-//        ChatLeftWithProfile item = new ChatLeftWithProfile();
-//        item.setText(data.getText());
-//        item.setTime();
-//        body.add(item, "wrap, w 100::80%");
-//        repaint();
-//        revalidate();
-//    }
     public void addItemLeft(ReceiveMessageModel data) {
-        ChatLeft item = new ChatLeft();
-        item.setText(data.getText());
-        item.setTime();
-        body.add(item, "wrap, w 100::80%");
+        if (data.getMessageType() == MessageType.TEXT) {
+            ChatLeft item = new ChatLeft();
+            item.setText(data.getText());
+            item.setTime();
+            body.add(item, "wrap, w 100::80%");
+        } else if (data.getMessageType() == MessageType.EMOJI) {
+            ChatLeft item = new ChatLeft();
+            item.setEmoji(Emoji.getInstance().getEmoji(Integer.valueOf(data.getText())).getIcon());
+            item.setTime();
+            body.add(item, "wrap, w 100::80%");
+        }
         repaint();
         revalidate();
+        scrollToBottom();
     }
 
     public void addItemLeft(String text, String user, String[] images) {
@@ -54,6 +54,29 @@ public class ChatBody extends javax.swing.JPanel {
         body.revalidate();
     }
 
+    public void addItemRight(SendMessageModel data) {
+        if (data.getMessageType() == MessageType.TEXT) {
+            ChatRight item = new ChatRight();
+            item.setText(data.getText());
+            item.setTime();
+            body.add(item, "wrap, al right, w 100::80%");
+        } else if (data.getMessageType() == MessageType.EMOJI) {
+            ChatRight item = new ChatRight();
+            item.setEmoji(Emoji.getInstance().getEmoji(Integer.valueOf(data.getText())).getIcon());
+            body.add(item, "wrap, al right, w 100::80%");
+            item.setTime();
+        } else if (data.getMessageType() == MessageType.IMAGE) {
+            ChatRight item = new ChatRight();
+            item.setText("");
+            item.setImage(data.getFile());
+            item.setTime();
+            body.add(item, "wrap, al right, w 100::80%");
+        }
+        repaint();
+        revalidate();
+        scrollToBottom();
+    }
+
     public void addItemFile(String text, String user, String fileName, String fileSize) {
         ChatLeftWithProfile item = new ChatLeftWithProfile();
         item.setText(text);
@@ -65,29 +88,6 @@ public class ChatBody extends javax.swing.JPanel {
         body.revalidate();
     }
 
-    public void addItemRight(SendMessageModel data) {
-        ChatRight item = new ChatRight();
-        System.out.println("SendMessageModel text: " + data.getText());
-        item.setText(data.getText());
-        item.setTime();
-        body.add(item, "wrap, al right, w 100::80%");
-        repaint();
-        revalidate();
-        scrollToBottom();
-    }
-    
-//    public void addItemRight(String text, Icon... image) {
-//        ChatRight item = new ChatRight();
-//        item.setText(text);
-//        item.setImage(image);
-//        body.add(item, "wrap, al right, w 100::80%");
-//        //  ::80% set max with 80%
-//        body.repaint();
-//        body.revalidate();
-//        item.setTime();
-//        scrollToBottom();
-//    }
-
     public void addItemFileRight(String text, String fileName, String fileSize) {
         ChatRight item = new ChatRight();
         item.setText(text);
@@ -96,7 +96,7 @@ public class ChatBody extends javax.swing.JPanel {
         body.repaint();
         body.revalidate();
     }
-    
+
     public void addDate(String date) {
         ChatDate item = new ChatDate();
         item.setDate(date);
@@ -104,8 +104,8 @@ public class ChatBody extends javax.swing.JPanel {
         body.repaint();
         body.revalidate();
     }
-    
-    public void clearChat(){
+
+    public void clearChat() {
         body.removeAll();
         repaint();
         revalidate();

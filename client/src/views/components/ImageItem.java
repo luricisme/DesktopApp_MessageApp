@@ -3,11 +3,16 @@ package views.components;
 import java.awt.image.BufferedImage;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import models.FileSenderModel;
 import views.swing.blurHash.BlurHash;
 
 public class ImageItem extends javax.swing.JLayeredPane {
     public ImageItem() {
         initComponents();
+    }
+    
+    public void setImage(Icon image, FileSenderModel fileSender){
+        pic.setImage(image);
     }
     
     public void setImage(String image){

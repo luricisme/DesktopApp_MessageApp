@@ -22,15 +22,21 @@ public class ChatLeft extends javax.swing.JLayeredPane {
     }
 
     public void setImage(Icon... images) {
-        txt.setImage(false, images);
+//        txt.setImage(false, images);
+        // Update next 
     }
-    
+
     public void setImage(String... images) {
         txt.setImage(false, images);
     }
 
     public void setFile(String fileName, String fileSize) {
         txt.setFile(fileName, fileSize);
+    }
+
+    public void setEmoji(Icon icon) {
+        txt.hideText();
+        txt.setEmoji(true, icon);
     }
 
     public void setTime() {

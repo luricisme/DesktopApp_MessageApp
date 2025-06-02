@@ -4,10 +4,14 @@ import events.PublicEvent;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import models.FileSenderModel;
 import models.ReceiveMessageModel;
+import models.SendMessageModel;
 import models.UserAccountModel;
 
 public class Service {
@@ -17,6 +21,7 @@ public class Service {
     private final int PORT_NUMBER = 9999;
     private final String IP = "localhost";
     private UserAccountModel user;
+    private List<FileSenderModel> fileSender;
 
     public static Service getInstance() {
         if (instance == null) {
@@ -26,6 +31,7 @@ public class Service {
     }
 
     private Service() {
+        fileSender = new ArrayList<>();
     }
 
     public void startServer() {
@@ -49,18 +55,18 @@ public class Service {
             client.on("user_status", new Emitter.Listener() {
                 @Override
                 public void call(Object... os) {
-                    int userID = (Integer)os[0];
+                    int userID = (Integer) os[0];
                     boolean status = (Boolean) os[1];
-                    if(status){
+                    if (status) {
                         // Connect
                         PublicEvent.getInstance().getEventMenuLeft().userConnect(userID);
-                    } else{
+                    } else {
                         // Disconnect
                         PublicEvent.getInstance().getEventMenuLeft().userDisconnect(userID);
                     }
                 }
             });
-            
+
             client.on("receive_ms", new Emitter.Listener() {
                 @Override
                 public void call(Object... os) {
@@ -72,6 +78,25 @@ public class Service {
             client.open();
         } catch (URISyntaxException e) {
             error(e);
+        }
+    }
+    
+    public FileSenderModel addFile(File file, SendMessageModel message) throws IOException{
+        FileSenderModel data = new FileSenderModel(file, client, message);
+        message.setFile(data);
+        fileSender.add(data);
+        // For send file one by one
+        if(fileSender.size() == 1){
+            data.initSend();
+        }
+        return data;
+    }
+    
+    public void fileSendFinish(FileSenderModel data)throws IOException{
+        fileSender.remove(data);
+        if(!fileSender.isEmpty()){
+            // Start send new file when old file sending finish
+            fileSender.get(0).initSend();
         }
     }
 

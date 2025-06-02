@@ -22,6 +22,7 @@ import models.PackageSenderModel;
 import models.ReceiveImageModel;
 import models.ReceiveMessageModel;
 import models.RegisterModel;
+import models.RequestFileModel;
 import models.SendMessageModel;
 import models.UserAccountModel;
 
@@ -128,6 +129,27 @@ public class Service {
                 } catch (IOException | SQLException e) {
                     ar.sendAckData(true);
                     e.printStackTrace();
+                }
+            }
+        });
+        
+        server.addEventListener("get_file", Integer.class, new DataListener<Integer>() {
+            @Override
+            public void onData(SocketIOClient sioc, Integer t, AckRequest ar) throws Exception {
+                FileModel file = fileService.initFile(t);
+                long fileSize = fileService.getFileSize(t);
+                ar.sendAckData(file.getFileExtension(), fileSize);
+            }
+        });
+        
+        server.addEventListener("request_file", RequestFileModel.class, new DataListener<RequestFileModel>() {
+            @Override
+            public void onData(SocketIOClient sioc, RequestFileModel t, AckRequest ar) throws Exception {
+                byte[] data = fileService.getFileData(t.getCurrentLength(), t.getFileID());
+                if(data != null){
+                    ar.sendAckData(data);
+                } else{
+                    ar.sendAckData();
                 }
             }
         });

@@ -2,40 +2,44 @@ package views.components;
 
 import events.EventFileSender;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import models.FileSenderModel;
 import models.ReceiveImageModel;
+import services.Service;
 import views.swing.blurHash.BlurHash;
+import events.EventFileReceiver;
 
 public class ImageItem extends javax.swing.JLayeredPane {
+
     public ImageItem() {
         initComponents();
     }
-    
+
     // Handle for send image
-    public void setImage(Icon image, FileSenderModel fileSender){
-        fileSender.addEvent(new EventFileSender(){
+    public void setImage(Icon image, FileSenderModel fileSender) {
+        fileSender.addEvent(new EventFileSender() {
             @Override
             public void onSending(double percentage) {
-                progress.setValue((int)percentage);
+                progress.setValue((int) percentage);
             }
 
             @Override
             public void onStartSending() {
-                
+
             }
 
             @Override
             public void onFinish() {
                 progress.setVisible(false);
             }
-            
+
         });
         pic.setImage(image);
     }
-    
-    public void setImage(ReceiveImageModel dataImage){
+
+    public void setImage(ReceiveImageModel dataImage) {
         int width = dataImage.getWidth();
         int height = dataImage.getHeight();
         int[] data = BlurHash.decode(dataImage.getImage(), width, height, 1);
@@ -43,6 +47,26 @@ public class ImageItem extends javax.swing.JLayeredPane {
         img.setRGB(0, 0, width, height, data, 0, width);
         Icon icon = new ImageIcon(img);
         pic.setImage(icon);
+        try {
+            Service.getInstance().addFileReceiver(dataImage.getFileID(), new EventFileReceiver() {
+                @Override
+                public void onReceiving(double percentage) {
+                    progress.setValue((int) percentage);
+                }
+
+                @Override
+                public void onStartReceiving() {
+                }
+
+                @Override
+                public void onFinish(File file) {
+                    progress.setVisible(false);
+                    pic.setImage(new ImageIcon(file.getAbsolutePath()));
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressWarnings("unchecked")

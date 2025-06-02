@@ -9,10 +9,12 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import models.FileReceiverModel;
 import models.FileSenderModel;
 import models.ReceiveMessageModel;
 import models.SendMessageModel;
 import models.UserAccountModel;
+import events.EventFileReceiver;
 
 public class Service {
 
@@ -22,6 +24,7 @@ public class Service {
     private final String IP = "localhost";
     private UserAccountModel user;
     private List<FileSenderModel> fileSender;
+    private List<FileReceiverModel> fileReceiver;
 
     public static Service getInstance() {
         if (instance == null) {
@@ -32,6 +35,7 @@ public class Service {
 
     private Service() {
         fileSender = new ArrayList<>();
+        fileReceiver = new ArrayList<>();
     }
 
     public void startServer() {
@@ -80,23 +84,38 @@ public class Service {
             error(e);
         }
     }
-    
-    public FileSenderModel addFile(File file, SendMessageModel message) throws IOException{
+
+    public FileSenderModel addFile(File file, SendMessageModel message) throws IOException {
         FileSenderModel data = new FileSenderModel(file, client, message);
         message.setFile(data);
         fileSender.add(data);
         // For send file one by one
-        if(fileSender.size() == 1){
+        if (fileSender.size() == 1) {
             data.initSend();
         }
         return data;
     }
-    
-    public void fileSendFinish(FileSenderModel data)throws IOException{
+
+    public void fileSendFinish(FileSenderModel data) throws IOException {
         fileSender.remove(data);
-        if(!fileSender.isEmpty()){
+        if (!fileSender.isEmpty()) {
             // Start send new file when old file sending finish
             fileSender.get(0).initSend();
+        }
+    }
+
+    public void fileReceiveFinish(FileReceiverModel data) throws IOException {
+        fileReceiver.remove(data);
+        if (!fileReceiver.isEmpty()) {
+            fileSender.get(0).initSend();
+        }
+    }
+
+    public void addFileReceiver(int fileID, EventFileReceiver event) throws IOException {
+        FileReceiverModel data = new FileReceiverModel(fileID, client, event);
+        fileReceiver.add(data);
+        if (fileReceiver.size() == 1) {
+            data.initReceive();
         }
     }
 

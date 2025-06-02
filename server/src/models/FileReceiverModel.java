@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-public class ReceiverFileModel {
+public class FileReceiverModel {
 
     SendMessageModel message;
     File file;
@@ -35,10 +35,10 @@ public class ReceiverFileModel {
         this.accFile = accFile;
     }
 
-    public ReceiverFileModel() {
+    public FileReceiverModel() {
     }
 
-    public ReceiverFileModel(SendMessageModel message, File file) throws FileNotFoundException {
+    public FileReceiverModel(SendMessageModel message, File file) throws FileNotFoundException {
         this.message = message;
         this.file = file;
         this.accFile = new RandomAccessFile(file, "rw");

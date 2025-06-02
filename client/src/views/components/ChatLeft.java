@@ -2,6 +2,7 @@ package views.components;
 
 import java.awt.Color;
 import javax.swing.Icon;
+import models.ReceiveImageModel;
 
 public class ChatLeft extends javax.swing.JLayeredPane {
 
@@ -26,8 +27,8 @@ public class ChatLeft extends javax.swing.JLayeredPane {
         // Update next 
     }
 
-    public void setImage(String... images) {
-        txt.setImage(false, images);
+    public void setImage(ReceiveImageModel dataImage) {
+        txt.setImage(false, dataImage);
     }
 
     public void setFile(String fileName, String fileSize) {

@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.border.EmptyBorder;
 import models.FileSenderModel;
+import models.ReceiveImageModel;
 
 public class ChatItem extends javax.swing.JLayeredPane {
 
@@ -66,12 +67,12 @@ public class ChatItem extends javax.swing.JLayeredPane {
         add(layer);
     }
 
-    public void setImage(boolean right, String... images) {
+    public void setImage(boolean right, ReceiveImageModel dataImage) {
         JLayeredPane layer = new JLayeredPane();
         layer.setLayout(new FlowLayout(right ? FlowLayout.RIGHT : FlowLayout.LEFT));
         layer.setBorder(new EmptyBorder(0, 5, 0, 5));
         ChatImage chatImage = new ChatImage(right);
-        chatImage.addImage(images);
+        chatImage.addImage(dataImage);
         layer.add(chatImage);
         add(layer);
     }

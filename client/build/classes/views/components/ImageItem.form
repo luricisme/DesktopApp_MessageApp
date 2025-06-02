@@ -30,7 +30,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
       <SubComponents>
-        <Component class="views.swing.Progress" name="progress1">
+        <Component class="views.swing.Progress" name="progress">
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="progressType" type="views.swing.Progress$ProgressType" editor="org.netbeans.modules.form.editors.EnumEditor">

@@ -121,6 +121,7 @@ public class Service {
                         dataImage.setFileID(t.getFileID());
                         SendMessageModel message = fileService.closeFile(dataImage);
                         // Send to client 'message'
+                        sendTempFileToClient(message, dataImage);
                     } else {
                         ar.sendAckData(true);
                     }
@@ -181,6 +182,15 @@ public class Service {
                     c.getClient().sendEvent("receive_ms", new ReceiveMessageModel(data.getMessageType(), data.getFromUserID(), data.getText(), null));
                     break;
                 }
+            }
+        }
+    }
+    
+    private void sendTempFileToClient(SendMessageModel data, ReceiveImageModel dataImage){
+        for (ClientModel c : listClient) {
+            if (c.getUser().getUserID() == data.getToUserID()) {
+                c.getClient().sendEvent("receive_ms", new ReceiveMessageModel(data.getMessageType(), data.getFromUserID(), data.getText(), dataImage));
+                break;
             }
         }
     }

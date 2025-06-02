@@ -1,5 +1,6 @@
 package models;
 
+import events.EventFileSender;
 import io.socket.client.Ack;
 import io.socket.client.Socket;
 import java.io.File;
@@ -8,6 +9,15 @@ import java.io.RandomAccessFile;
 import services.Service;
 
 public class FileSenderModel {
+
+    private SendMessageModel message;
+    int fileID;
+    String fileExtensions;
+    File file;
+    long fileSize;
+    RandomAccessFile accFile;
+    Socket socket;
+    private EventFileSender event;
 
     public SendMessageModel getMessage() {
         return message;
@@ -77,14 +87,6 @@ public class FileSenderModel {
         fileSize = accFile.length();
     }
 
-    private SendMessageModel message;
-    int fileID;
-    String fileExtensions;
-    File file;
-    long fileSize;
-    RandomAccessFile accFile;
-    Socket socket;
-
     // Đọc từng khối nhỏ của file (mỗi lần tối đa 2000 byte)
     public synchronized byte[] readFile() throws IOException {
         long filepointer = accFile.getFilePointer();
@@ -115,8 +117,11 @@ public class FileSenderModel {
         });
     }
 
-    public void startSend(int fileID) throws IOException{
+    public void startSend(int fileID) throws IOException {
         this.fileID = fileID;
+        if (event != null) {
+            event.onStartSending();
+        }
         sendingFile();
     }
 
@@ -124,27 +129,33 @@ public class FileSenderModel {
         PackageSenderModel data = new PackageSenderModel();
         data.setFileID(fileID);
         byte[] bytes = readFile();
-        if(bytes != null){
+        if (bytes != null) {
             data.setData(bytes);
             data.setFinish(false);
-        }else{
+        } else {
             data.setFinish(true);
             close();
         }
         socket.emit("send_file", data.toJSONObject(), new Ack() {
             @Override
             public void call(Object... os) {
-                if(os.length > 0){
-                    boolean act = (boolean)os[0];
-                    if(act){
-                        try{
-                            if(!data.isFinish()){
+                if (os.length > 0) {
+                    boolean act = (boolean) os[0];
+                    if (act) {
+                        try {
+                            if (!data.isFinish()) {
+                                if (event != null) {
+                                    event.onSending(getPercentage());
+                                }
                                 sendingFile();
-                            }else{
+                            } else {
                                 // File send finish
                                 Service.getInstance().fileSendFinish(FileSenderModel.this);
+                                if (event != null) {
+                                    event.onFinish();
+                                }
                             }
-                        } catch(IOException e){
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
@@ -166,5 +177,13 @@ public class FileSenderModel {
 
     private String getExtensions(String fileName) {
         return fileName.substring(fileName.lastIndexOf("."), fileName.length());
+    }
+
+    public EventFileSender getEvent() {
+        return event;
+    }
+
+    public void addEvent(EventFileSender event) {
+        this.event = event;
     }
 }

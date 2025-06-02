@@ -10,6 +10,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 import models.FileSenderModel;
+import models.ReceiveImageModel;
 import net.miginfocom.swing.MigLayout;
 
 public class ChatImage extends javax.swing.JPanel {
@@ -29,14 +30,14 @@ public class ChatImage extends javax.swing.JPanel {
 
     }
 
-    public void addImage(String... images) {
-        for (String image : images) {
-            ImageItem pic = new ImageItem();
-            pic.setPreferredSize(new Dimension(200, 200));
-            pic.setImage(image);
+    public void addImage(ReceiveImageModel dataImage) {
+
+        ImageItem pic = new ImageItem();
+        pic.setPreferredSize(new Dimension(dataImage.getWidth(), dataImage.getHeight()));
+        pic.setImage(dataImage);
 //            addEvent(pic, image);
-            add(pic, "wrap");
-        }
+        add(pic, "wrap");
+
     }
 
     private void addEvent(Component com, Icon image) {

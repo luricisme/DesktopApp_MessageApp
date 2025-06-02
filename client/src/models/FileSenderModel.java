@@ -100,6 +100,7 @@ public class FileSenderModel {
     }
 
     public void initSend() throws IOException {
+        System.out.println("Init file to server and wait server response back");
         socket.emit("send_to_user", message.toJSONObject(), new Ack() {
             @Override
             public void call(Object... os) {

@@ -63,6 +63,7 @@ public class MorePanel extends javax.swing.JPanel {
         add(ch, "w 100%, h 100%");
     }
 
+    // SEND IMAGE
     private JButton getButtonImage() {
         OptionButton cmd = new OptionButton();
         cmd.setIcon(new ImageIcon(getClass().getResource("/icons/image.png")));
@@ -102,6 +103,7 @@ public class MorePanel extends javax.swing.JPanel {
         return cmd;
     }
 
+    // SEND FILE
     private JButton getButtonFile() {
         OptionButton cmd = new OptionButton();
         cmd.setIcon(new ImageIcon(getClass().getResource("/icons/link.png")));
@@ -110,12 +112,42 @@ public class MorePanel extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser ch = new JFileChooser();
                 ch.showOpenDialog(Main.getFrames()[0]);
+                ch.setFileFilter(new FileFilter() {
+                    @Override
+                    public boolean accept(File file) {
+                        return file.isFile(); // Chấp nhận tất cả các file
+                    }
+
+                    @Override
+                    public String getDescription() {
+                        return "All files";
+                    }
+                });
+                int option = ch.showOpenDialog(Main.getFrames()[0]);
+                if (option == JFileChooser.APPROVE_OPTION) {
+                    File[] files = ch.getSelectedFiles();
+                    try {
+                        for (File file : files) {
+                            SendMessageModel message = new SendMessageModel(
+                                    MessageType.FILE,
+                                    Service.getInstance().getUser().getUserID(),
+                                    user.getUserID(),
+                                    ""
+                            );
+                            Service.getInstance().addFile(file, message);
+                            PublicEvent.getInstance().getEventChat().sendMessage(message);
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
             }
 
         });
         return cmd;
     }
 
+    // SEND EMOJI
     private JButton getEmojiStyle1() {
         OptionButton cmd = new OptionButton();
         cmd.setIcon(Emoji.getInstance().getEmoji(18).toSize(25, 25).getIcon());
@@ -152,7 +184,7 @@ public class MorePanel extends javax.swing.JPanel {
         return cmd;
     }
 
-    private void sendMessage(SendMessageModel data){
+    private void sendMessage(SendMessageModel data) {
         Service.getInstance().getClient().emit("send_to_user", data.toJSONObject());
     }
 

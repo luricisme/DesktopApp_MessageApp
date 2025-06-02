@@ -11,6 +11,7 @@ public class ImageItem extends javax.swing.JLayeredPane {
         initComponents();
     }
     
+    // Handle for send image
     public void setImage(Icon image, FileSenderModel fileSender){
         pic.setImage(image);
     }
@@ -36,8 +37,7 @@ public class ImageItem extends javax.swing.JLayeredPane {
         pic.setLayout(new java.awt.GridBagLayout());
 
         progress1.setToolTipText("");
-        progress1.setValue(52);
-        progress1.setProgressType(views.swing.Progress.ProgressType.FILE);
+        progress1.setProgressType(views.swing.Progress.ProgressType.CANCEL);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;

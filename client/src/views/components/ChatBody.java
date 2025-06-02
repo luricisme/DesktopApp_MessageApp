@@ -72,6 +72,13 @@ public class ChatBody extends javax.swing.JPanel {
             item.setTime();
             body.add(item, "wrap, al right, w 100::80%");
         }
+//        } else if (data.getMessageType() == MessageType.FILE) {
+//            ChatRight item = new ChatRight();
+//            item.setText("");
+//            item.setImage(data.getFile());
+//            item.setTime();
+//            body.add(item, "wrap, al right, w 100::80%");
+//        }
         repaint();
         revalidate();
         scrollToBottom();

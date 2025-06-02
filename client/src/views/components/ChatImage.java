@@ -11,7 +11,6 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 import models.FileSenderModel;
 import net.miginfocom.swing.MigLayout;
-import views.swing.PictureBox;
 
 public class ChatImage extends javax.swing.JPanel {
 

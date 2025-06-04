@@ -4,14 +4,19 @@ import com.formdev.flatlaf.intellijthemes.FlatArcIJTheme;
 import events.EventImageView;
 import events.EventMain;
 import events.PublicEvent;
+import io.socket.client.Ack;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import models.UserAccountModel;
+import models.ViewMessageModel;
+import models.ViewMessageRequest;
 import services.Service;
 import views.forms.Chat;
 import views.swing.ComponentResizer;
@@ -57,6 +62,22 @@ public class Main extends javax.swing.JFrame {
             @Override
             public void selectUser(UserAccountModel user) {
                 home.setUser(user);
+                ViewMessageRequest vmr = new ViewMessageRequest(Service.getInstance().getUser().getUserID(), user.getUserID());
+                System.out.println("This chat is between: " + vmr.getFromUserID() + "  and " + vmr.getToUserID());
+                System.out.println("Sending JSON: " + vmr.toJSONObject().toString());
+                Service.getInstance().getClient().emit("message_history", vmr.toJSONObject(), new Ack() {
+                    @Override
+                    public void call(Object... os) {
+                        System.out.println("CLIENT IS RECEIVING MESSAGE HISTORY");
+                        List<ViewMessageModel> messages = new ArrayList<>();
+                        System.out.println("os: " + os.length);
+                        for (Object o : os) {
+                            System.out.println("o: " + o);
+                            messages.add(new ViewMessageModel(o));
+                        }
+                        PublicEvent.getInstance().getEventChat().showHistoryMessage(messages);
+                    }
+                });
             }
 
             @Override
@@ -65,7 +86,7 @@ public class Main extends javax.swing.JFrame {
             }
 
         });
-        
+
         PublicEvent.getInstance().addEventImageView(new EventImageView() {
             @Override
             public void viewImage(Icon image) {

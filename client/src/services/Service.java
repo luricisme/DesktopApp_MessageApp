@@ -15,6 +15,7 @@ import models.ReceiveMessageModel;
 import models.SendMessageModel;
 import models.UserAccountModel;
 import events.EventFileReceiver;
+import models.ViewMessageModel;
 
 public class Service {
 
@@ -75,9 +76,24 @@ public class Service {
                 @Override
                 public void call(Object... os) {
                     ReceiveMessageModel message = new ReceiveMessageModel(os[0]);
+                    System.out.println("PREPARE SHOW MESSAGE");
                     PublicEvent.getInstance().getEventChat().receiveMessage(message);
                 }
             });
+
+//            client.on("message_history", new Emitter.Listener() {
+//                @Override
+//                public void call(Object... os) {
+//                    List<ViewMessageModel> messages = new ArrayList<>();
+//                    for (Object o : os) {
+//                        messages.add(new ViewMessageModel(o));
+//                    }
+//                    // Gửi cho UI hiển thị
+//                    System.out.println("DATA: " + messages);
+//                    System.out.println("PREPARE SHOW HISTORY CHAT");
+//                    PublicEvent.getInstance().getEventChat().showHistoryMessage(messages);
+//                }
+//            });
 
             client.open();
         } catch (URISyntaxException e) {

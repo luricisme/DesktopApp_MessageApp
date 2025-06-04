@@ -4,6 +4,9 @@ import com.corundumstudio.socketio.SocketIOClient;
 
 public class ClientModel {
 
+    SocketIOClient client;
+    UserAccountModel user;
+
     public SocketIOClient getClient() {
         return client;
     }
@@ -27,7 +30,4 @@ public class ClientModel {
 
     public ClientModel() {
     }
-    
-    SocketIOClient client;
-    UserAccountModel user;
 }

@@ -23,3 +23,17 @@ CREATE TABLE `chat_application`.`files` (
   `Status` char(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`FileID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `chat_application`.`messages` (
+    `message_id` SERIAL PRIMARY KEY,
+    `from_user_id` INT(10) UNSIGNED NOT NULL,
+    `to_user_id` INT(10) UNSIGNED NOT NULL,
+    `message_type` INT NOT NULL, 
+    `content` TEXT,           
+    `file_id` INT,  
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `is_read` BOOLEAN DEFAULT FALSE,
+
+    FOREIGN KEY (`from_user_id`) REFERENCES `user` (`UserID`),
+    FOREIGN KEY (`to_user_id`) REFERENCES `user` (`UserID`)
+);

@@ -42,6 +42,7 @@ public class ChatBottom extends javax.swing.JPanel {
         JScrollPane scroll = new JScrollPane();
         scroll.setBorder(null);
         JIMSendTextPane txt = new JIMSendTextPane();
+        //  Thêm phương thức gửi đi bằng cách nhấn Ctrl + Enter
         txt.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent ke) {

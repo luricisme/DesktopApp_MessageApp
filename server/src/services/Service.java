@@ -25,6 +25,8 @@ import models.RegisterModel;
 import models.RequestFileModel;
 import models.SendMessageModel;
 import models.UserAccountModel;
+import models.ViewMessageModel;
+import models.ViewMessageRequest;
 
 public class Service {
 
@@ -32,6 +34,7 @@ public class Service {
     private SocketIOServer server;
     private UserService userService;
     private FileService fileService;
+    private MessageService messageService;
     private List<ClientModel> listClient;
     private JTextArea textArea;
 
@@ -48,6 +51,7 @@ public class Service {
         this.textArea = textArea;
         this.userService = new UserService();
         this.fileService = new FileService();
+        this.messageService = new MessageService();
         listClient = new ArrayList<>();
     }
 
@@ -132,7 +136,7 @@ public class Service {
                 }
             }
         });
-        
+
         server.addEventListener("get_file", Integer.class, new DataListener<Integer>() {
             @Override
             public void onData(SocketIOClient sioc, Integer t, AckRequest ar) throws Exception {
@@ -141,18 +145,30 @@ public class Service {
                 ar.sendAckData(file.getFileExtension(), fileSize);
             }
         });
-        
+
         server.addEventListener("request_file", RequestFileModel.class, new DataListener<RequestFileModel>() {
             @Override
             public void onData(SocketIOClient sioc, RequestFileModel t, AckRequest ar) throws Exception {
                 byte[] data = fileService.getFileData(t.getCurrentLength(), t.getFileID());
-                if(data != null){
+                if (data != null) {
                     ar.sendAckData(data);
-                } else{
+                } else {
                     ar.sendAckData();
                 }
             }
         });
+
+        server.addEventListener("message_history", ViewMessageRequest.class, new DataListener<ViewMessageRequest>() {
+            @Override
+            public void onData(SocketIOClient client, ViewMessageRequest data, AckRequest ackRequest) throws Exception {
+                // Giả sử messageService có phương thức lấy tin nhắn giữa 2 user
+                System.out.println("SERVER RECEIVE: " + data.getFromUserID() + " and " + data.getToUserID());
+                List<ViewMessageModel> history = messageService.getMessages(data.getFromUserID(), data.getToUserID());
+                System.out.println("SERVER RETURN HISTORY MESSAGE TO CLIENT" + history.size());
+                // Trả dữ liệu cho client
+                ackRequest.sendAckData(history.toArray());
+            }
+        }); 
 
         server.addDisconnectListener(new DisconnectListener() {
             @Override
@@ -183,32 +199,63 @@ public class Service {
     }
 
     public void sendToClient(SendMessageModel data, AckRequest ar) {
-//        for(ClientModel c: listClient){
-//            if(c.getUser().getUserID() == data.getToUserID()){
-//                c.getClient().sendEvent("receive_ms", new ReceiveMessageModel(data.getMessageType(), data.getFromUserID(), data.getText(), null));
-//                break;
-//            }
-//        }
-
         if (data.getMessageType() == MessageType.IMAGE.getValue() || data.getMessageType() == MessageType.FILE.getValue()) {
             try {
                 FileModel file = fileService.addFileReceiver(data.getText());
                 fileService.initFile(file, data);
-                ar.sendAckData(file.getFileID());
+
+                boolean saved = messageService.insertMessage(
+                        data.getFromUserID(),
+                        data.getToUserID(),
+                        data.getMessageType(),
+                        data.getText(),
+                        file.getFileID()
+                );
+                if (saved) {
+                    ar.sendAckData(file.getFileID());
+                } else {
+                    System.out.println("Failed to save file message");
+                    ar.sendAckData(false, "Failed to save file message");
+                }
+//                ar.sendAckData(file.getFileID());
             } catch (FileNotFoundException | SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            for (ClientModel c : listClient) {
-                if (c.getUser().getUserID() == data.getToUserID()) {
-                    c.getClient().sendEvent("receive_ms", new ReceiveMessageModel(data.getMessageType(), data.getFromUserID(), data.getText(), null));
-                    break;
+            boolean saved = messageService.insertMessage(
+                    data.getFromUserID(),
+                    data.getToUserID(),
+                    data.getMessageType(),
+                    data.getText(),
+                    null
+            );
+            if (saved) {
+                for (ClientModel c : listClient) {
+                    if (c.getUser().getUserID() == data.getToUserID()) {
+                        c.getClient().sendEvent("receive_ms", new ReceiveMessageModel(
+                                data.getMessageType(),
+                                data.getFromUserID(),
+                                data.getText(),
+                                null
+                        ));
+                        break;
+                    }
                 }
+                ar.sendAckData(true);
+            } else {
+                System.out.println("Failed to save file message");
+                ar.sendAckData(false, "Failed to save message");
             }
+//            for (ClientModel c : listClient) {
+//                if (c.getUser().getUserID() == data.getToUserID()) {
+//                    c.getClient().sendEvent("receive_ms", new ReceiveMessageModel(data.getMessageType(), data.getFromUserID(), data.getText(), null));
+//                    break;
+//                }
+//            }
         }
     }
-    
-    private void sendTempFileToClient(SendMessageModel data, ReceiveImageModel dataImage){
+
+    private void sendTempFileToClient(SendMessageModel data, ReceiveImageModel dataImage) {
         for (ClientModel c : listClient) {
             if (c.getUser().getUserID() == data.getToUserID()) {
                 c.getClient().sendEvent("receive_ms", new ReceiveMessageModel(data.getMessageType(), data.getFromUserID(), data.getText(), dataImage));
@@ -216,7 +263,7 @@ public class Service {
             }
         }
     }
-    
+
     public int removeClient(SocketIOClient client) {
         for (ClientModel d : listClient) {
             if (d.getClient() == client) {

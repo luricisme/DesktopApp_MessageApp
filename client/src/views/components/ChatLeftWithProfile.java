@@ -1,51 +1,55 @@
 package views.components;
 
 import java.awt.Color;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.Icon;
 
 public class ChatLeftWithProfile extends javax.swing.JLayeredPane {
 
     public ChatLeftWithProfile() {
         initComponents();
-        txt.setBackground(new Color(236,234,228));
+        txt.setBackground(new Color(236, 234, 228));
     }
-    
-    public void setUserProfile(String user){
+
+    public void setUserProfile(String user) {
         txt.setUserProfile(user);
     }
-    
-    public void setImageProfile(Icon image){
+
+    public void setImageProfile(Icon image) {
         avaImage.setImage(image);
     }
-    
-    public void setText(String text){
+
+    public void setText(String text) {
 //        txt.setText(text);
 //        txt.setTime("10:30 PM"); // Testing
 //        txt.sendSuccess();
-          if (text.equals("")){
-              txt.hideText();
-          }else{
-              txt.setText(text);
-          }
+        if (text.equals("")) {
+            txt.hideText();
+        } else {
+            txt.setText(text);
+        }
     }
-    
-    public void setImage(Icon ...images){
+
+    public void setImage(Icon... images) {
 //        txt.setImage(false, images);
 //          Update next
     }
-    
-    public void setImage(String ...images){
+
+    public void setImage(String... images) {
         //txt.setImage(false, images);
     }
-    
-    public void setFile(String fileName, String fileSize){
+
+    public void setFile(String fileName, String fileSize) {
         txt.setFile(fileName, fileSize);
     }
-    
-    public void setTime(){
-        txt.setTime("10:30 PM");
+
+    public void setTime() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("hh:mm a");
+        String currentTime = LocalTime.now().format(dtf);
+        txt.setTime(currentTime);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

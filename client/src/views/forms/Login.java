@@ -95,7 +95,7 @@ public class Login extends javax.swing.JPanel {
         appLine = new javax.swing.JLabel();
         slide = new views.swing.PanelSlide();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(191, 208, 193));
 
         pic.setImage(new javax.swing.ImageIcon(getClass().getResource("/icons/login_image01.png"))); // NOI18N
 
@@ -124,7 +124,7 @@ public class Login extends javax.swing.JPanel {
         appLine.setBackground(new java.awt.Color(102, 153, 255));
         appLine.setOpaque(true);
 
-        slide.setBackground(new java.awt.Color(255, 255, 255));
+        slide.setBackground(new java.awt.Color(191, 208, 193));
         slide.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         javax.swing.GroupLayout slideLayout = new javax.swing.GroupLayout(slide);

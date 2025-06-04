@@ -21,10 +21,10 @@ public class P_Login extends javax.swing.JPanel {
         btnLogin = new javax.swing.JButton();
         btnRegister = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(191, 208, 193));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
 
         lbTitle.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
-        lbTitle.setForeground(new java.awt.Color(160, 160, 160));
         lbTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbTitle.setText("Login");
 
@@ -80,7 +80,7 @@ public class P_Login extends javax.swing.JPanel {
                     .addComponent(lbUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lbPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRegister, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                    .addComponent(btnRegister, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                     .addComponent(txtPassword))
                 .addContainerGap())
         );
@@ -101,7 +101,7 @@ public class P_Login extends javax.swing.JPanel {
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegister)
-                .addGap(0, 55, Short.MAX_VALUE))
+                .addGap(0, 51, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

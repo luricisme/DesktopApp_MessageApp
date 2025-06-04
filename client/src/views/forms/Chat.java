@@ -59,7 +59,7 @@ public class Chat extends javax.swing.JPanel {
                 }
             }
         });
-        add(chatTitle, "wrap");
+        add(chatTitle, "wrap, h 47!");
         add(chatBody, "grow, push, wrap");
         add(chatBottom, "h ::50%");
 //        chatBody.setVisible(false);

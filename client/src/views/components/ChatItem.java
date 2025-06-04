@@ -124,7 +124,6 @@ public class ChatItem extends javax.swing.JLayeredPane {
         txt = new views.swing.JIMSendTextPane();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setOpaque(false);
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
         txt.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 5, 10));

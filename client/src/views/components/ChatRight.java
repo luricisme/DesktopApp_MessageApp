@@ -1,6 +1,8 @@
 package views.components;
 
 import java.awt.Color;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.Icon;
 import models.FileSenderModel;
 
@@ -41,7 +43,9 @@ public class ChatRight extends javax.swing.JLayeredPane {
     }
 
     public void setTime() {
-        txt.setTime("10:30 PM");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("hh:mm a");
+        String currentTime = LocalTime.now().format(dtf);
+        txt.setTime(currentTime);
     }
 
     /**

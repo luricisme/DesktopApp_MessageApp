@@ -26,8 +26,8 @@ public class P_Register extends javax.swing.JPanel {
         btnBackLogin = new javax.swing.JButton();
         lbError = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(191, 208, 193));
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(106, 142, 102), 2));
 
         lbTitle.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
         lbTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

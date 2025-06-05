@@ -48,7 +48,7 @@ public class MorePanel extends javax.swing.JPanel {
         panelHeader = new JPanel();
         panelHeader.setLayout(new BoxLayout(panelHeader, BoxLayout.LINE_AXIS));
         panelHeader.add(getButtonImage());
-        panelHeader.add(getButtonFile());
+//        panelHeader.add(getButtonFile());
         panelHeader.add(getEmojiStyle1());
         add(panelHeader, "w 100%, h 40!, wrap");
         panelDetail = new JPanel();
@@ -59,14 +59,14 @@ public class MorePanel extends javax.swing.JPanel {
         ch.setVerticalScrollBar(new ScrollBar());
         //  Test color
         panelHeader.setOpaque(false);
-        panelDetail.setBackground(new Color(236, 224, 228));
+        panelDetail.setBackground(new Color(255, 255, 255));
         add(ch, "w 100%, h 100%");
     }
 
     // SEND IMAGE
     private JButton getButtonImage() {
         OptionButton cmd = new OptionButton();
-        cmd.setIcon(new ImageIcon(getClass().getResource("/icons/image.png")));
+        cmd.setIcon(new ImageIcon(getClass().getResource("/icons/link.png")));
         cmd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

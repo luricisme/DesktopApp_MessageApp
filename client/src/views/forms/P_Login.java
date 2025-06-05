@@ -21,8 +21,8 @@ public class P_Login extends javax.swing.JPanel {
         btnLogin = new javax.swing.JButton();
         btnRegister = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(191, 208, 193));
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(106, 142, 102), 2));
 
         lbTitle.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
         lbTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
